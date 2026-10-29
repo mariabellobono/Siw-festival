@@ -16,16 +16,16 @@ public class Film extends EntitaBase{
 	@Column(nullable = false)
 	@NotBlank
 	private String titolo;
-	
+
 	@NotNull @Min(1895) @NotFutureYear
 	private Integer anno;
-	
+
 	@NotNull @Min(1)
 	private Integer durata;
-	
+
 	@NotBlank
 	private String genere;
-	
+
 	@NotBlank
 	private String paeseProduzione;
 
@@ -34,11 +34,7 @@ public class Film extends EntitaBase{
 	// @ManyToOne verso Attore (piu' complessa, e un regista non e' per forza un attore).
 	@NotBlank
 	private String regista;
-	
-	@NotBlank   //non richiesto esplicitamente
-	private String registra;
-	
-	//prova per git
+
 	// LISTE INIZIALIZZATE (vale per tutte le liste di questa classe).
 	// Perche': un oggetto creato con "new" (es. dalla form) avrebbe la lista null e
 	// getX().add(...) lancerebbe NullPointerException. Cosi' la lista e' sempre pronta.
@@ -47,13 +43,13 @@ public class Film extends EntitaBase{
 	// di ogni add: funziona, ma va ripetuto in ogni metodo ed e' facile dimenticarlo.
 	@ManyToMany
 	private List<Festival> festival = new ArrayList<>();
-	
+
 	@OneToMany(mappedBy = "film")
 	private List<Proiezione> proiezioni = new ArrayList<>();
-	
+
 	@OneToMany(mappedBy = "film")
 	private List<Recensione> recensioni = new ArrayList<>();
-	
+
 	@OneToMany(mappedBy = "film")
 	private List<Interpretazione> interpretazioni = new ArrayList<>();
 
@@ -97,13 +93,6 @@ public class Film extends EntitaBase{
 		this.paeseProduzione = paeseProduzione;
 	}
 
-	public String getRegista() {
-		return regista;
-	}
-
-	public void setRegista(String regista) {
-		this.regista = regista;
-	}
 
 	public List<Festival> getFestival() {
 		return festival;
@@ -129,37 +118,39 @@ public class Film extends EntitaBase{
 	public void setRecensioni(List<Recensione> recensioni) {
 		this.recensioni = recensioni;
 	}
-	
-
-	public List<Interpretazione> getInterpretazioni() {
-		return interpretazioni;
+	public String getRegista() {
+		return regista;
 	}
 
-	public void setInterpretazioni(List<Interpretazione> interpretazioni) {
-		this.interpretazioni = interpretazioni;
+	public void setRegista(String regista) {
+		this.regista = regista;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(titolo, anno);
-	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null || getClass() != obj.getClass())
-			return false;
-		Film other = (Film) obj;
-		return Objects.equals(titolo, other.titolo) && Objects.equals(anno, other.anno);
-	}
 
-	public String getRegistra() {
-		return registra;
-	}
 
-	public void setRegistra(String registra) {
-		this.registra = registra;
-	}
-
+public List<Interpretazione> getInterpretazioni() {
+	return interpretazioni;
 }
+
+public void setInterpretazioni(List<Interpretazione> interpretazioni) {
+	this.interpretazioni = interpretazioni;
+}
+
+@Override
+public int hashCode() {
+	return Objects.hash(titolo, anno);
+}
+
+@Override
+public boolean equals(Object obj) {
+	if (this == obj)
+		return true;
+	if (obj == null || getClass() != obj.getClass())
+		return false;
+	Film other = (Film) obj;
+	return Objects.equals(titolo, other.titolo) && Objects.equals(anno, other.anno);
+}
+}
+
+
