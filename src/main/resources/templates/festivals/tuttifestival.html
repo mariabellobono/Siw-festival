@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">  <!--DICHIARAZIONE PER UTILIZZARE THYMELEAF-->
+<head>
+    <meta charset="UTF-8">
+    <title>Festival</title>
+</head>
+<body>
+    <h1>Festival</h1>
+    <ul>  
+        <li th:each="festival : ${festivals}">    <!--ripete (e tutto quello che ha dentro) una volta per ogni elemento della lista festivals, e in ogni giro chiama l’elemento corrente festival-->
+            <a th:href="@{/festivals/{id}(id=${festival.id})}"   
+               th:text="${festival.nome}">Nome</a>
+            - <span th:text="${festival.citta}">Città</span>
+            (<span th:text="${festival.anno}">2025</span>)
+        </li>
+    </ul>
+    <a href="/">Home</a>
+</body>
+</html>
