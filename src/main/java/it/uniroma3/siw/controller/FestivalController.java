@@ -25,9 +25,9 @@ public class FestivalController {
 	 }
 	 
 	 @GetMapping("/festivals/{id}")
-	 public String show(@PathVariable("id")Long id,Model model) {
+	 public String singoloFestival(@PathVariable("id")Long id,Model model) {
 		 model.addAttribute("festival", this.festivalService.findById(id));
-		 return "festivals/show";
+		 return "festivals/festival";
 	 }
 	
 

@@ -8,7 +8,7 @@
     <h1>Film</h1>
     <ul>   <!--LISTA PUNTATA-->
         <li th:each="film : ${films}">    <!--ripete (e tutto quello che ha dentro) una volta per ogni elemento della lista festivals, e in ogni giro chiama l’elemento corrente festival-->
-            <a th:href="@{/films/{id}(id=${film.id})}"   
+            <a th:href="@{/films/{id} (id=${film.id}) }"   
                th:text="${film.titolo}">Titolo</a>
             - <span th:text="${film.regista}">Regista</span>
             (<span th:text="${film.anno}">2000</span>)

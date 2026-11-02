@@ -22,9 +22,9 @@ public class FilmController {
 		
 	}
 	@GetMapping("/films/{id}")
-	public String show(@PathVariable("id")Long id,Model model) {
+	public String singoloFilm(@PathVariable("id")Long id,Model model) {
 		model.addAttribute("film", filmService.findById(id));
-		return "films/show";
+		return "films/film";
 		
 		
 	}
