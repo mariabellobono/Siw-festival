@@ -12,7 +12,7 @@
         <h2>Proiezioni</h2>
         <ul>
             <li th:each="p : *{proiezioni}">
-                <a th:href="@{/proiezioni/{id}(id=${p.id})}" th:text="${p.data} + ' - ' +${p.ora} + ' - ' +${p.stato} + '">dettagli Proiezione</a>
+                <a th:href="@{/proiezioni/{id}(id=${p.id})}" th:text="${p.data} + ' - ' +${p.ora} + ' - ' +${p.stato}">dettagli Proiezione</a>
             </li>
         </ul>
     </div>

@@ -6,25 +6,29 @@ import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
+// ANAGRAFICA: chi e' la persona. Le credenziali di accesso (username, password, ruolo)
+// stanno nella classe Credenziali (slide 10: User + Credentials).
+// Perche' separate: l'anagrafica serve alle pagine (es. "recensione di Maria Rossi"),
+// le credenziali servono solo al login. Alternativa: tutto in una classe sola (piu' semplice,
+// ma la password viaggerebbe insieme ai dati della persona).
 @Entity
 public class Utente extends EntitaBase {
-	
-	@Column(unique = true,nullable = false)
+
 	@NotBlank
-	private String username;
-	
-	@Column(nullable = false)
+	private String nome;
+
 	@NotBlank
-	private String password;
-	
-	@Enumerated(EnumType.STRING)
-	private Ruolo ruolo;
-	
+	private String cognome;
+
+	@Column(unique = true, nullable = false)
+	@NotBlank
+	@Email
+	private String email;
+
 	// LISTE INIZIALIZZATE (vale per tutte le liste di questa classe).
 	// Perche': un oggetto creato con "new" (es. dalla form) avrebbe la lista null e
 	// getX().add(...) lancerebbe NullPointerException. Cosi' la lista e' sempre pronta.
@@ -34,28 +38,28 @@ public class Utente extends EntitaBase {
 	@OneToMany(mappedBy = "utente")
 	private List<Recensione> recensioni = new ArrayList<>();
 
-	public String getUsername() {
-		return username;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getCognome() {
+		return cognome;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setCognome(String cognome) {
+		this.cognome = cognome;
 	}
 
-	public Ruolo getRuolo() {
-		return ruolo;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setRuolo(Ruolo ruolo) {
-		this.ruolo = ruolo;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public List<Recensione> getRecensioni() {
@@ -66,9 +70,10 @@ public class Utente extends EntitaBase {
 		this.recensioni = recensioni;
 	}
 
+	// L'email identifica la persona (e' unica): e' il campo naturale per equals/hashCode.
 	@Override
 	public int hashCode() {
-		return Objects.hash(username);
+		return Objects.hash(email);
 	}
 
 	@Override
@@ -78,7 +83,6 @@ public class Utente extends EntitaBase {
 		if (obj == null || getClass() != obj.getClass())
 			return false;
 		Utente other = (Utente) obj;
-		return Objects.equals(username, other.username);
+		return Objects.equals(email, other.email);
 	}
-
 }

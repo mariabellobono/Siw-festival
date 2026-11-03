@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Proiezioni</title>
+</head>
+<body>
+    <h1>Proiezioni</h1>
+    <ul>
+        <!-- Una riga per ogni proiezione. Film, sala e festival sono oggetti collegati: si scende con il punto (proiezione.film.titolo). -->
+        <li th:each="proiezione : ${proiezioni}">
+            <a th:href="@{/proiezioni/{id}(id=${proiezione.id})}"
+               th:text="${proiezione.data} + ' ' + ${proiezione.ora}">Data e ora</a>
+            - <span th:text="${proiezione.film.titolo}">Film</span>
+            (<span th:text="${proiezione.sala.nome}">Sala</span>,
+            <span th:text="${proiezione.festival.nome}">Festival</span>)
+            - <span th:text="${proiezione.stato}">Stato</span>
+        </li>
+    </ul>
+    <a href="/">Home</a>
+</body>
+</html>

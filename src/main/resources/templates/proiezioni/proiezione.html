@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dettaglio proiezione</title>
+</head>
+<body>
+    <div th:object="${proiezione}">
+        <h1 th:text="*{film.titolo}">Titolo del film</h1>
+        <p>Data: <span th:text="*{data}">2026-11-10</span> alle <span th:text="*{ora}">21:00</span></p>
+        <p>Stato: <span th:text="*{stato}">SCHEDULED</span></p>
+
+        <!-- Tre link verso le entita' collegate: dentro th:object si usa *{...} anche per film.id, sala.id, festival.id -->
+        <p>Film: <a th:href="@{/films/{id}(id=*{film.id})}" th:text="*{film.titolo}">Film</a></p>
+        <p>Sala: <a th:href="@{/sale/{id}(id=*{sala.id})}" th:text="*{sala.nome}">Sala</a></p>
+        <p>Festival: <a th:href="@{/festivals/{id}(id=*{festival.id})}" th:text="*{festival.nome}">Festival</a></p>
+    </div>
+    <a href="/proiezioni">Torna all'elenco</a>
+</body>
+</html>
