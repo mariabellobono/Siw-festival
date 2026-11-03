@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">  <!--DICHIARAZIONE PER UTILIZZARE THYMELEAF-->
+<head>
+    <meta charset="UTF-8">
+    <title>Sale</title>
+</head>
+<body>
+    <h1>Sale</h1>
+    <ul>   <!--LISTA PUNTATA-->
+        <li th:each="sala : ${sale}">   
+            <a th:href="@{/sale/{id}(id=${sala.id})}"   
+               th:text="${sala.nome}">Nome</a>
+            - <span th:text="${sala.indirizzo}">Indirizzo</span>
+            (<span th:text="${sala.capienza}">Capienza</span>)
+        </li>
+    </ul>
+    <a href="/">Home</a>
+</body>
+</html>

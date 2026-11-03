@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dettaglio sala</title>
+</head>
+<body>
+    <div th:object="${sala}">
+        <h1 th:text="*{nome}">Nome</h1>
+        <p><span th:text="*{indirizzo}">Indirizzo</span></p>
+        <p><span th:text="*{capienza}">Capienza</span></p>
+        <h2>Proiezioni</h2>
+        <ul>
+            <li th:each="p : *{proiezioni}">
+                <a th:href="@{/proiezioni/{id}(id=${p.id})}" th:text="${p.data} + ' - ' +${p.ora} + ' - ' +${p.stato} + '">dettagli Proiezione</a>
+            </li>
+        </ul>
+    </div>
+    <a href="/sale">Torna all'elenco</a>
+</body>
+</html>

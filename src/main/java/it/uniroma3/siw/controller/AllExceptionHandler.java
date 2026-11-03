@@ -9,6 +9,7 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import it.uniroma3.siw.exception.FestivalNotFoundException;
 import it.uniroma3.siw.exception.FilmNotFoundException;
+import it.uniroma3.siw.exception.SalaNotFoundException;
 
 // Una sola classe che intercetta le eccezioni di TUTTI i controller.
 // Alternativa: un try/catch in ogni metodo del controller, ma si ripeterebbe ovunque.
@@ -16,7 +17,7 @@ import it.uniroma3.siw.exception.FilmNotFoundException;
 public class AllExceptionHandler {
 
 	// Quando una di queste eccezioni esce da un controller, parte questo metodo.
-	@ExceptionHandler({ FestivalNotFoundException.class, FilmNotFoundException.class })
+	@ExceptionHandler({ FestivalNotFoundException.class, FilmNotFoundException.class,SalaNotFoundException.class })
 	@ResponseStatus(HttpStatus.NOT_FOUND) // la risposta HTTP deve essere 404, non 200
 	public String risorsaNonTrovata(RuntimeException ex, Model model) {
 		model.addAttribute("messaggio", ex.getMessage());

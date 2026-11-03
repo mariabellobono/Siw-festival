@@ -17,3 +17,8 @@ insert into film_festival (festival_id, films_id) select festival.id, film.id fr
 insert into film_festival (festival_id, films_id) select festival.id, film.id from festival, film where festival.nome = 'Fellini Cinema Award' and film.titolo = 'La parata delle ombre';
 insert into film_festival (festival_id, films_id) select festival.id, film.id from festival, film where festival.nome = 'Fellini Cinema Award' and film.titolo = 'Il circo della memoria';
 insert into film_festival (festival_id, films_id) select festival.id, film.id from festival, film where festival.nome = 'Fellini Cinema Award' and film.titolo = 'Lista dei desideri';
+
+-- SALE (tre sale con capienze diverse: serviranno per il controllo di disponibilità)
+insert into sala (id, nome, indirizzo, capienza) values (nextval('sala_seq'), 'Sala Mastroianni', 'Via del Corso 10, Roma', 220);
+insert into sala (id, nome, indirizzo, capienza) values (nextval('sala_seq'), 'Cinema Aurora', 'Via Veneto 5, Roma', 120);
+insert into sala (id, nome, indirizzo, capienza) values (nextval('sala_seq'), 'Sala Fellini', 'Viale Vespucci 3, Rimini', 80);

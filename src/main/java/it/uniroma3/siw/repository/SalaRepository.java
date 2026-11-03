@@ -6,4 +6,5 @@ import it.uniroma3.siw.model.Sala;
 
 public interface SalaRepository extends CrudRepository<Sala, Long> {
 
+	
 }
