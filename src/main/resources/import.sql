@@ -326,3 +326,10 @@ insert into proiezione (id, data, ora, stato, festival_id, film_id, sala_id) sel
 insert into proiezione (id, data, ora, stato, festival_id, film_id, sala_id) select nextval('proiezione_seq'), '2027-06-10', '21:00:00', 'SCHEDULED', fe.id, fi.id, sa.id from festival fe, film fi, sala sa where fe.nome = 'Roma Classic Cinema' and fi.titolo = 'Il Gattopardo' and sa.nome = 'Sala Vittorio Gassman';
 insert into proiezione (id, data, ora, stato, festival_id, film_id, sala_id) select nextval('proiezione_seq'), '2027-06-11', '21:00:00', 'SCHEDULED', fe.id, fi.id, sa.id from festival fe, film fi, sala sa where fe.nome = 'Roma Classic Cinema' and fi.titolo = 'I sette samurai' and sa.nome = 'Sala Monica Vitti';
 insert into proiezione (id, data, ora, stato, festival_id, film_id, sala_id) select nextval('proiezione_seq'), '2027-06-12', '21:00:00', 'SCHEDULED', fe.id, fi.id, sa.id from festival fe, film fi, sala sa where fe.nome = 'Roma Classic Cinema' and fi.titolo = 'La dolce vita' and sa.nome = 'Sala Gina Lollobrigida';
+
+
+-- UTENTI E CREDENZIALI (password: admin / utente1, cifrate con BCrypt)
+insert into utente (id, nome, cognome, email) values (nextval('utente_seq'), 'Admin', 'Sistema', 'admin@festival.it');
+insert into utente (id, nome, cognome, email) values (nextval('utente_seq'), 'Mario', 'Rossi', 'mario.rossi@festival.it');
+insert into credenziali (id, username, password, ruolo, utente_id) select nextval('credenziali_seq'), 'admin', '$2b$10$BT78ZlJ2AQkzxOcn1TLNUeaMzM4IjDmo8I/OzcYZZn0pHhhMRjp6W', 'ADMIN', u.id from utente u where u.email = 'admin@festival.it';
+insert into credenziali (id, username, password, ruolo, utente_id) select nextval('credenziali_seq'), 'utente1', '$2b$10$/.knpi7r/Ox4zdNfX20dDej5upc9YkPUPKB.gVnjQvgRYtTlq/TYK', 'USER', u.id from utente u where u.email = 'mario.rossi@festival.it';

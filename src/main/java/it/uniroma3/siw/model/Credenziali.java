@@ -9,7 +9,6 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 // ACCESSO: come entra e con quali permessi (usata da Spring Security).
 // Ogni persona (Utente) ha una sola Credenziali e viceversa: relazione uno a uno.
@@ -27,7 +26,7 @@ public class Credenziali extends EntitaBase {
 
 	// Enum invece di una String: un errore di battitura (ADMN) non compila.
 	@Enumerated(EnumType.STRING)
-	@NotNull
+	@Column(nullable = false)
 	private Ruolo ruolo;
 
 	// cascade = ALL: salvando le credenziali Hibernate salva anche l'utente collegato.
