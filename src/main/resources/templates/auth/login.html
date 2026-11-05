@@ -10,6 +10,9 @@
     <!-- compare solo se l'indirizzo è /login?error=true (cioè dopo un tentativo sbagliato) -->
     <p th:if="${param.error}">Credenziali errate</p>
 
+    <!-- compare solo se l'indirizzo è /login?registrato (cioè subito dopo una registrazione riuscita) -->
+    <p th:if="${param.registrato}">Registrazione completata: ora puoi accedere.</p>
+
     <form th:action="@{/login}" method="post"> <!--modulo che invia i campi al server + dove invia i dati? login usando th:action -->
         <div><label>Username <input type="text" name="username"></label></div>
         <div><label>Password <input type="password" name="password"></label></div>

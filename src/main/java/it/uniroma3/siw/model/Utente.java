@@ -18,15 +18,15 @@ import jakarta.validation.constraints.NotBlank;
 @Entity
 public class Utente extends EntitaBase {
 
-	@NotBlank
+	@NotBlank(message = "Compila il campo vuoto")
 	private String nome;
 
-	@NotBlank
+	@NotBlank(message = "Compila il campo vuoto")
 	private String cognome;
 
 	@Column(unique = true, nullable = false)
-	@NotBlank
-	@Email
+	@NotBlank(message = "Compila il campo vuoto")
+	@Email(message = "Inserisci un'email valida")
 	private String email;
 
 	// LISTE INIZIALIZZATE (vale per tutte le liste di questa classe).

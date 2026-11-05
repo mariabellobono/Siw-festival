@@ -25,5 +25,10 @@ public class UtenteService {
 	public Utente save(Utente utente) {
 		return this.utenteRepository.save(utente);
 	}
+	@Transactional(readOnly = true)
+	public boolean existsByEmail(String email) {
+		return this.utenteRepository.existsByEmail(email);
+		
+	}
 
 }

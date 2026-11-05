@@ -19,6 +19,16 @@
 	<!-- Se sei loggata -->
 	<div th:if="${userDetails != null}">
 	    <p>Ciao, <span th:text="${userDetails.username}">utente</span></p>
+	    <!-- Visibile solo se l'utente ha l'autorità ADMIN -->
+	    <div th:if="${userDetails.authorities.?[authority == 'ADMIN'].size() > 0}">
+	        <p><strong>Area amministratore</strong></p>
+	        <ul>
+	            <li><a th:href="@{/admin/films/new}">Inserisci un nuovo film</a></li>
+	            <li><a th:href="@{/admin/festivals/new}">Inserisci un nuovo festival</a></li>
+	            <li><a th:href="@{/admin/sale/new}">Inserisci una nuova sala</a></li>
+	            <li><a th:href="@{/admin/proiezioni/new}">Programma una nuova proiezione</a></li>
+	        </ul>
+	    </div>
 	    <form th:action="@{/logout}" method="post">
 	        <button type="submit">Logout</button>
 	    </form>

@@ -16,12 +16,12 @@ import jakarta.validation.constraints.NotBlank;
 public class Credenziali extends EntitaBase {
 
 	@Column(unique = true, nullable = false)
-	@NotBlank
+	@NotBlank(message = "Compila il campo vuoto")
 	private String username;
 
 	// Nel database NON si salva la password in chiaro ma il suo hash (BCrypt, blocco 2).
 	@Column(nullable = false)
-	@NotBlank
+	@NotBlank(message = "Compila il campo vuoto")
 	private String password;
 
 	// Enum invece di una String: un errore di battitura (ADMN) non compila.

@@ -41,7 +41,7 @@ public class SecurityConfiguration {
 	                "/festivals/**", "/films/**", "/sale/**", "/proiezioni/**",
 	                "/css/**", "/images/**", "/favicon.ico").permitAll();
 	        auth.requestMatchers(HttpMethod.POST, "/register", "/login").permitAll();
-	        auth.requestMatchers("/admin/**").hasAuthority("ADMIN");
+	        auth.requestMatchers("/admin/**").hasAuthority("ADMIN");    //hasAuthority protegge gia l'admin quindi non deve passare per il controller 
 	        auth.anyRequest().authenticated();
 	    });
 	    http.formLogin(form -> {
