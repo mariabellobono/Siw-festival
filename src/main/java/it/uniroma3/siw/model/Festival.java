@@ -18,20 +18,20 @@ import jakarta.validation.constraints.NotNull;
 public class Festival extends EntitaBase{
 
 	@Column(nullable = false)
-	@NotBlank
+	@NotBlank(message = "Compila il campo vuoto")
 	private String nome;
 
-	@NotNull @Min(1900) @Max(2100)
+	@NotNull(message = "Compila il campo vuoto") @Min(value = 1900, message = "Anno non valido") @Max(value = 2100, message = "Anno non valido")
 	private Integer anno;
 	
 	@Column(nullable = false)
-	@NotBlank
+	@NotBlank(message = "Compila il campo vuoto")
 	private String citta;
 	
-	@NotNull
+	@NotNull(message = "Compila il campo vuoto")
 	private LocalDate dataInizio;
 	
-	@NotNull
+	@NotNull(message = "Compila il campo vuoto")
 	private LocalDate dataFine;
 	
 	private String descrizione;

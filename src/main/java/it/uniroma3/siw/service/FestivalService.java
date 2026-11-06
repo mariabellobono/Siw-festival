@@ -26,4 +26,9 @@ public class FestivalService {
                 .orElseThrow(() -> new FestivalNotFoundException(id));
     }
 
+    @Transactional
+    public Festival save(Festival festival) {
+        return this.festivalRepository.save(festival);
+    }
+
 }

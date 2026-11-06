@@ -5,6 +5,7 @@
     <title>Dettaglio festival</title>
 </head>
 <body>
+    <p th:if="${messaggio}" th:text="${messaggio}">Messaggio</p>
     <div th:object="${festival}">
         <h1 th:text="*{nome}">Nome</h1>
         <p><span th:text="*{citta}">Città</span>, <span th:text="*{anno}">2025</span></p>

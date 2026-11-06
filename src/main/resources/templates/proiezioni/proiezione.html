@@ -5,6 +5,7 @@
     <title>Dettaglio proiezione</title>
 </head>
 <body>
+    <p th:if="${messaggio}" th:text="${messaggio}">Messaggio</p>
     <div th:object="${proiezione}">
         <h1 th:text="*{film.titolo}">Titolo del film</h1>
         <p>Data: <span th:text="*{data}">2026-11-10</span> alle <span th:text="*{ora}">21:00</span></p>

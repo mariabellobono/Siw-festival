@@ -29,9 +29,10 @@ public class SalaService {
 				
 		
 	}
-	
-	
-	
-	
-	
+
+	@Transactional
+	public Sala save(Sala sala) {
+		return this.salaRepository.save(sala);
+	}
+
 }

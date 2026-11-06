@@ -5,6 +5,7 @@
     <title>Dettaglio sala</title>
 </head>
 <body>
+    <p th:if="${messaggio}" th:text="${messaggio}">Messaggio</p>
     <div th:object="${sala}">
         <h1 th:text="*{nome}">Nome</h1>
         <p><span th:text="*{indirizzo}">Indirizzo</span></p>

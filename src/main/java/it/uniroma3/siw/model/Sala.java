@@ -12,13 +12,13 @@ import jakarta.validation.constraints.*;
 @Entity
 public class Sala extends EntitaBase {
 
-	@NotBlank
+	@NotBlank(message = "Compila il campo vuoto")
 	private String nome;
 	
-	@NotBlank
+	@NotBlank(message = "Compila il campo vuoto")
 	private String indirizzo;
 	
-	@NotNull @Positive
+	@NotNull(message = "Compila il campo vuoto") @Positive(message = "La capienza deve essere maggiore di 0")
 	private Integer capienza;
 	
 	// LISTE INIZIALIZZATE (vale per tutte le liste di questa classe).

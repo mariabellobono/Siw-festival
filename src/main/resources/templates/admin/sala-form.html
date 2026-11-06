@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuova sala</title>
+</head>
+<body>
+    <h1>Nuova sala</h1>
+
+    <form th:action="@{/admin/sale}" th:object="${sala}" method="post">
+
+        <div>
+            <label>Nome <input type="text" th:field="*{nome}"></label>
+            <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">errore</span>
+        </div>
+
+        <div>
+            <label>Indirizzo <input type="text" th:field="*{indirizzo}"></label>
+            <span th:if="${#fields.hasErrors('indirizzo')}" th:errors="*{indirizzo}">errore</span>
+        </div>
+
+        <div>
+            <label>Capienza <input type="number" th:field="*{capienza}"></label>
+            <span th:if="${#fields.hasErrors('capienza')}" th:errors="*{capienza}">errore</span>
+        </div>
+
+        <button type="submit">Salva</button>
+    </form>
+
+    <p><a th:href="@{/}">Torna alla Home</a></p>
+</body>
+</html>
