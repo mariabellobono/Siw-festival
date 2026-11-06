@@ -5,6 +5,7 @@
     <title>Dettaglio film</title>
 </head>
 <body>
+    <p th:if="${messaggio}" th:text="${messaggio}">Messaggio</p>
     <div th:object="${film}">
         <h1 th:text="*{titolo}">Titolo</h1>
         <p>Regia di <span th:text="*{regista}">Regista</span></p>

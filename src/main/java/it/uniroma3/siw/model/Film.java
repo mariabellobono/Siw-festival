@@ -14,25 +14,25 @@ import jakarta.validation.constraints.NotNull;
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"titolo", "anno"}))
 public class Film extends EntitaBase{
 	@Column(nullable = false)
-	@NotBlank
+	@NotBlank(message = "Compila il campo vuoto")
 	private String titolo;
 
-	@NotNull @Min(1895) @NotFutureYear
+	@NotNull(message = "Compila il campo vuoto") @Min(value = 1895, message = "Anno non valido") @NotFutureYear
 	private Integer anno;
 
-	@NotNull @Min(1)
+	@NotNull(message = "Compila il campo vuoto") @Min(value = 1, message = "La durata deve essere di almeno 1 minuto")
 	private Integer durata;
 
-	@NotBlank
+	@NotBlank(message = "Compila il campo vuoto")
 	private String genere;
 
-	@NotBlank
+	@NotBlank(message = "Compila il campo vuoto")
 	private String paeseProduzione;
 
 	// INTEGRAZIONE: il testo del progetto cita il regista (dettaglio film e ricerca bonus)
 	// ma non lo elenca tra gli attributi. Scelto un semplice campo testo; alternativa:
 	// @ManyToOne verso Attore (piu' complessa, e un regista non e' per forza un attore).
-	@NotBlank
+	@NotBlank(message = "Compila il campo vuoto")
 	private String regista;
 
 	// LISTE INIZIALIZZATE (vale per tutte le liste di questa classe).

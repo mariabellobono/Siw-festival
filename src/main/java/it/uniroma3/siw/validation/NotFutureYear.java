@@ -14,7 +14,7 @@ import jakarta.validation.Payload;
 @Target({ ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface NotFutureYear {
-    String message() default "L'anno non può essere nel futuro";
+    String message() default "Inserisci un anno che non sia nel futuro";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

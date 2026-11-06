@@ -26,7 +26,7 @@ public class Utente extends EntitaBase {
 
 	@Column(unique = true, nullable = false)
 	@NotBlank(message = "Compila il campo vuoto")
-	@Email(message = "Inserisci un'email valida")
+	@Email(message = "Inserisci una email valida")
 	private String email;
 
 	// LISTE INIZIALIZZATE (vale per tutte le liste di questa classe).
