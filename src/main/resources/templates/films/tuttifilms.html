@@ -5,12 +5,13 @@
     <title>Film</title>
 </head>
 <body>
-    <h1>Film</h1>
+    <h1 th:text="${filtroRegista != null} ? 'Film di ' + ${filtroRegista} : 'Film'">Film</h1>
+    <p th:if="${filtroRegista != null}"><a th:href="@{/films}">Mostra tutti i film</a></p>
     <ul>   <!--LISTA PUNTATA-->
         <li th:each="film : ${films}">    <!--ripete (e tutto quello che ha dentro) una volta per ogni elemento della lista festivals, e in ogni giro chiama l’elemento corrente festival-->
             <a th:href="@{/films/{id} (id=${film.id}) }"   
                th:text="${film.titolo}">Titolo</a>
-            - <span th:text="${film.regista}">Regista</span>
+            - <a th:href="@{/films(regista=${film.regista})}" th:text="${film.regista}">Regista</a>
             (<span th:text="${film.anno}">2000</span>)
         </li>
     </ul>

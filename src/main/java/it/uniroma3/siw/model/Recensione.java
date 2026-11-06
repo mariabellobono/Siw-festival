@@ -10,11 +10,11 @@ import jakarta.validation.constraints.*;
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"film_id", "utente_id"}))
 public class Recensione extends EntitaBase{
 	
-	@NotBlank
+	@NotBlank(message = "Compila il campo vuoto")
 	private String testo;
 	
 	@Column(nullable = false)
-	@NotNull @Min(1) @Max(5)
+	@NotNull(message = "Compila il campo vuoto") @Min(value = 1, message = "Il voto deve essere compreso tra 1 e 5") @Max(value = 5, message = "Il voto deve essere compreso tra 1 e 5")
 	private Integer voto;
 	
 	private LocalDate data;

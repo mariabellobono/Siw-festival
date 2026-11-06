@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+import it.uniroma3.siw.exception.AttoreNotFoundException;
 import it.uniroma3.siw.exception.FestivalNotFoundException;
 import it.uniroma3.siw.exception.FilmNotFoundException;
 import it.uniroma3.siw.exception.ProiezioneNotFoundException;
+import it.uniroma3.siw.exception.RecensioneNotFoundException;
 import it.uniroma3.siw.exception.SalaNotFoundException;
 
 // Una sola classe che intercetta le eccezioni di TUTTI i controller.
@@ -22,7 +24,7 @@ public class AllExceptionHandler {
 	private static final Logger log = LoggerFactory.getLogger(AllExceptionHandler.class);
 
 	// Quando una di queste eccezioni esce da un controller, parte questo metodo.
-	@ExceptionHandler({ FestivalNotFoundException.class, FilmNotFoundException.class,SalaNotFoundException.class, ProiezioneNotFoundException.class })
+	@ExceptionHandler({ FestivalNotFoundException.class, FilmNotFoundException.class,SalaNotFoundException.class, ProiezioneNotFoundException.class, RecensioneNotFoundException.class, AttoreNotFoundException.class })
 	@ResponseStatus(HttpStatus.NOT_FOUND) // la risposta HTTP deve essere 404, non 200
 	public String risorsaNonTrovata(RuntimeException ex, Model model) {
 		model.addAttribute("messaggio", ex.getMessage());

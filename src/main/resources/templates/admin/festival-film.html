@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Film del festival</title>
+</head>
+<body>
+    <h1>Film di <span th:text="${festival.nome}">Festival</span></h1>
+
+    <p th:if="${messaggio}" th:text="${messaggio}">Messaggio</p>
+
+    <h2>Film che partecipano</h2>
+    <p th:if="${#lists.isEmpty(festival.films)}">Nessun film associato.</p>
+    <ul>
+        <li th:each="film : ${festival.films}">
+            <span th:text="${film.titolo} + ' (' + ${film.anno} + ')'">Titolo</span>
+            <!-- Un piccolo modulo POST per ogni film: la rimozione modifica i dati, quindi non puo' essere un semplice link (GET) -->
+            <form th:action="@{/admin/festivals/{id}/films/{filmId}/rimuovi(id=${festival.id},filmId=${film.id})}"
+                  method="post" style="display:inline">
+                <button type="submit">Rimuovi</button>
+            </form>
+        </li>
+    </ul>
+
+    <h2>Aggiungi un film</h2>
+    <p th:if="${#lists.isEmpty(filmDisponibili)}">Tutti i film sono già associati a questo festival.</p>
+    <form th:unless="${#lists.isEmpty(filmDisponibili)}"
+          th:action="@{/admin/festivals/{id}/films(id=${festival.id})}" method="post">
+        <select name="filmId">
+            <option th:each="f : ${filmDisponibili}" th:value="${f.id}" th:text="${f.titolo + ' (' + f.anno + ')'}">Film</option>
+        </select>
+        <button type="submit">Aggiungi</button>
+    </form>
+
+    <p><a th:href="@{/festivals/{id}(id=${festival.id})}">Torna al festival</a></p>
+</body>
+</html>

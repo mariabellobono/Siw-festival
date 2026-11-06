@@ -2,14 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Nuovo film</title>
+    <title>Film</title>
 </head>
 <body>
-    <h1>Nuovo film</h1>
+    <h1 th:text="${film.id != null} ? 'Modifica film' : 'Nuovo film'">Nuovo film</h1>
 
     <!-- th:object collega il modulo all'oggetto "film" messo nel Model dal controller.
          *{campo} e' una scorciatoia per ${film.campo} -->
-    <form th:action="@{/admin/films}" th:object="${film}" method="post">
+    <!-- Se il film ha gia' un id (modifica) il modulo invia a /admin/films/{id}, altrimenti a /admin/films (inserimento) -->
+    <form th:action="${film.id != null} ? @{/admin/films/{id}(id=${film.id})} : @{/admin/films}" th:object="${film}" method="post">
 
         <div>
             <label>Titolo <input type="text" th:field="*{titolo}"></label>

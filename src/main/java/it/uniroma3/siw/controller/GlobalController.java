@@ -17,4 +17,11 @@ public class GlobalController {
         return null;
     }
 
+	// true se l'utente collegato ha l'autorita' ADMIN: serve ai template per mostrare i pulsanti di modifica
+	@ModelAttribute("isAdmin")
+	public boolean isAdmin() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		return authentication != null && authentication.getAuthorities().stream()
+				.anyMatch(autorita -> autorita.getAuthority().equals("ADMIN"));
+	}
 }

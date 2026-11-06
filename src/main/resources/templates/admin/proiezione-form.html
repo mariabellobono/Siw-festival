@@ -5,9 +5,9 @@
     <title>Programma proiezione</title>
 </head>
 <body>
-    <h1>Programma una proiezione</h1>
+    <h1 th:text="${proiezioneId != null} ? 'Modifica proiezione' : 'Programma una proiezione'">Programma una proiezione</h1>
 
-    <form th:action="@{/admin/proiezioni}" th:object="${proiezioneForm}" method="post">
+    <form th:action="${proiezioneId != null} ? @{/admin/proiezioni/{id}(id=${proiezioneId})} : @{/admin/proiezioni}" th:object="${proiezioneForm}" method="post">
 
         <!-- Errori generali (non legati a un campo): sala occupata, film non nel festival, ecc. -->
         <div th:if="${#fields.hasGlobalErrors()}">

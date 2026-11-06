@@ -38,7 +38,7 @@ public class SecurityConfiguration {
 	public SecurityFilterChain regoleAccesso(HttpSecurity http) throws Exception {
 	    http.authorizeHttpRequests(auth -> {
 	        auth.requestMatchers(HttpMethod.GET, "/", "/index", "/login", "/register", "/error",
-	                "/festivals/**", "/films/**", "/sale/**", "/proiezioni/**",
+	                "/festivals/**", "/films/**", "/sale/**", "/proiezioni/**", "/attori/**",
 	                "/css/**", "/images/**", "/favicon.ico").permitAll();
 	        auth.requestMatchers(HttpMethod.POST, "/register", "/login").permitAll();
 	        auth.requestMatchers("/admin/**").hasAuthority("ADMIN");    //hasAuthority protegge gia l'admin quindi non deve passare per il controller 

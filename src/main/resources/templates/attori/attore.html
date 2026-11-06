@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dettaglio attore</title>
+</head>
+<body>
+    <div th:object="${attore}">
+        <h1 th:text="*{nome} + ' ' + *{cognome}">Nome Cognome</h1>
+        <p>Nato il <span th:text="*{dataNascita}">data</span> - <span th:text="*{nazionalita}">Paese</span></p>
+
+        <h2>Filmografia</h2>
+        <p th:if="${#lists.isEmpty(attore.interpretazioni)}">Nessun film registrato.</p>
+        <ul>
+            <li th:each="i : *{interpretazioni}">
+                <a th:href="@{/films/{id}(id=${i.film.id})}" th:text="${i.film.titolo} + ' (' + ${i.film.anno} + ')'">Film</a>
+                nel ruolo di <span th:text="${i.personaggio}">Personaggio</span>
+            </li>
+        </ul>
+    </div>
+    <a href="/films">Torna ai film</a>
+</body>
+</html>

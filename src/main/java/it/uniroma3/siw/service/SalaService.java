@@ -35,4 +35,15 @@ public class SalaService {
 		return this.salaRepository.save(sala);
 	}
 
+	// MODIFICA: si carica la sala dal database e si copiano solo i campi del modulo
+	// (cosi' la lista delle proiezioni della sala non viene toccata)
+	@Transactional
+	public Sala aggiorna(Long id, Sala dati) {
+		Sala sala = this.salaRepository.findById(id)
+				.orElseThrow(() -> new SalaNotFoundException(id));
+		sala.setNome(dati.getNome());
+		sala.setIndirizzo(dati.getIndirizzo());
+		sala.setCapienza(dati.getCapienza());
+		return this.salaRepository.save(sala);
+	}
 }

@@ -16,6 +16,13 @@
         <p>Sala: <a th:href="@{/sale/{id}(id=*{sala.id})}" th:text="*{sala.nome}">Sala</a></p>
         <p>Festival: <a th:href="@{/festivals/{id}(id=*{festival.id})}" th:text="*{festival.nome}">Festival</a></p>
     </div>
+    <!-- Pulsanti solo per l'admin e solo se la proiezione e' ancora programmata -->
+    <div th:if="${isAdmin and proiezione.stato.name() == 'SCHEDULED'}">
+        <p><a th:href="@{/admin/proiezioni/{id}/edit(id=${proiezione.id})}">Modifica proiezione</a></p>
+        <form th:action="@{/admin/proiezioni/{id}/annulla(id=${proiezione.id})}" method="post">
+            <button type="submit">Annulla proiezione</button>
+        </form>
+    </div>
     <a href="/proiezioni">Torna all'elenco</a>
 </body>
 </html>

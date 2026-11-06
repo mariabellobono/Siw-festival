@@ -8,17 +8,63 @@
     <p th:if="${messaggio}" th:text="${messaggio}">Messaggio</p>
     <div th:object="${film}">
         <h1 th:text="*{titolo}">Titolo</h1>
-        <p>Regia di <span th:text="*{regista}">Regista</span></p>
+        <p>Regia di <a th:href="@{/films(regista=*{regista})}" th:text="*{regista}">Regista</a></p>
         <p><span th:text="*{anno}">2000</span> - <span th:text="*{durata}">100</span> min</p>
         <p><span th:text="*{genere}">Genere</span> - <span th:text="*{paeseProduzione}">Paese</span></p>
 
         <h2>Festival</h2>
+        <p th:if="${#lists.isEmpty(film.festival)}">Il film non partecipa a nessun festival.</p>
         <ul>
             <li th:each="f : *{festival}">
                 <a th:href="@{/festivals/{id}(id=${f.id})}" th:text="${f.nome}">Festival</a>
             </li>
         </ul>
+
+        <h2>Cast</h2>
+        <p th:if="${#lists.isEmpty(film.interpretazioni)}">Cast non disponibile.</p>
+        <ul>
+            <li th:each="i : *{interpretazioni}">
+                <a th:href="@{/attori/{id}(id=${i.attore.id})}" th:text="${i.attore.nome} + ' ' + ${i.attore.cognome}">Attore</a>
+                nel ruolo di <span th:text="${i.personaggio}">Personaggio</span>
+            </li>
+        </ul>
+
+        <h2>Proiezioni</h2>
+        <p th:if="${#lists.isEmpty(film.proiezioni)}">Nessuna proiezione programmata.</p>
+        <ul>
+            <li th:each="p : *{proiezioni}">
+                <a th:href="@{/proiezioni/{id}(id=${p.id})}"
+                   th:text="${p.data} + ' ' + ${p.ora} + ' - ' + ${p.sala.nome} + ' (' + ${p.festival.nome} + ') - ' + ${p.stato}">Proiezione</a>
+            </li>
+        </ul>
+
+        <h2>Recensioni</h2>
+        <p th:if="${#lists.isEmpty(film.recensioni)}">Ancora nessuna recensione.</p>
+        <div th:each="r : *{recensioni}">
+            <p>
+                <strong th:text="${r.utente.nome} + ' ' + ${r.utente.cognome}">Utente</strong>
+                - voto <span th:text="${r.voto}">5</span>/5
+                - <span th:text="${r.data}">data</span>
+            </p>
+            <p th:text="${r.testo}">Testo</p>
+            <!-- Modifica e elimina compaiono solo sulla recensione dell'utente collegato -->
+            <div th:if="${miaRecensione != null and miaRecensione.id == r.id}">
+                <a th:href="@{/recensioni/{id}/edit(id=${r.id})}">Modifica</a>
+                <form th:action="@{/recensioni/{id}/elimina(id=${r.id})}" method="post" style="display:inline">
+                    <button type="submit">Elimina</button>
+                </form>
+            </div>
+            <hr>
+        </div>
+
+        <p th:if="${userDetails != null and miaRecensione == null}">
+            <a th:href="@{/recensioni/film/{id}/new(id=${film.id})}">Scrivi una recensione</a>
+        </p>
+        <p th:if="${userDetails == null}">
+            <a th:href="@{/login}">Accedi</a> per scrivere una recensione.
+        </p>
     </div>
+    <p th:if="${isAdmin}"><a th:href="@{/admin/films/{id}/edit(id=${film.id})}">Modifica film</a></p>
     <a href="/films">Torna all'elenco</a>
 </body>
 </html>

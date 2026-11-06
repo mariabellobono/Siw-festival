@@ -17,6 +17,7 @@
             </li>
         </ul>
     </div>
+    <p th:if="${isAdmin}"><a th:href="@{/admin/sale/{id}/edit(id=${sala.id})}">Modifica sala</a></p>
     <a href="/sale">Torna all'elenco</a>
 </body>
 </html>

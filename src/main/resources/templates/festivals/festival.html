@@ -14,9 +14,21 @@
 
         <h2>Film</h2>
         <ul>
-            <li th:each="film : *{films}" th:text="${film.titolo} + ' (' + ${film.anno} + ')'">Titolo</li>
+            <li th:each="film : *{films}">
+                <a th:href="@{/films/{id}(id=${film.id})}" th:text="${film.titolo} + ' (' + ${film.anno} + ')'">Titolo</a>
+            </li>
+        </ul>
+
+        <h2>Programma delle proiezioni</h2>
+        <p th:if="${#lists.isEmpty(festival.proiezioni)}">Nessuna proiezione programmata.</p>
+        <ul>
+            <li th:each="p : *{proiezioni}">
+                <a th:href="@{/proiezioni/{id}(id=${p.id})}"
+                   th:text="${p.data} + ' ' + ${p.ora} + ' - ' + ${p.film.titolo} + ' - ' + ${p.sala.nome} + ' - ' + ${p.stato}">Proiezione</a>
+            </li>
         </ul>
     </div>
+    <p th:if="${isAdmin}"><a th:href="@{/admin/festivals/{id}/films(id=${festival.id})}">Gestisci film del festival</a></p>
     <a href="/festivals">Torna all'elenco</a>
 </body>
 </html>
