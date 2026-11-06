@@ -5,6 +5,6 @@ import org.springframework.data.repository.CrudRepository;
 import it.uniroma3.siw.model.Film;
 
 public interface FilmRepository extends CrudRepository<Film, Long> {
-	
+	boolean existsByTitoloAndAnno(String Titolo,Integer anno);
 
 }

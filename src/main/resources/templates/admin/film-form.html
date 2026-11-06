@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuovo film</title>
+</head>
+<body>
+    <h1>Nuovo film</h1>
+
+    <!-- th:object collega il modulo all'oggetto "film" messo nel Model dal controller.
+         *{campo} e' una scorciatoia per ${film.campo} -->
+    <form th:action="@{/admin/films}" th:object="${film}" method="post">
+
+        <div>
+            <label>Titolo <input type="text" th:field="*{titolo}"></label>
+            <span th:if="${#fields.hasErrors('titolo')}" th:errors="*{titolo}">errore</span>
+        </div>
+
+        <div>
+            <label>Anno <input type="number" th:field="*{anno}"></label>
+            <span th:if="${#fields.hasErrors('anno')}" th:errors="*{anno}">errore</span>
+        </div>
+
+        <div>
+            <label>Durata (minuti) <input type="number" th:field="*{durata}"></label>
+            <span th:if="${#fields.hasErrors('durata')}" th:errors="*{durata}">errore</span>
+        </div>
+
+        <div>
+            <label>Genere <input type="text" th:field="*{genere}"></label>
+            <span th:if="${#fields.hasErrors('genere')}" th:errors="*{genere}">errore</span>
+        </div>
+
+        <div>
+            <label>Paese di produzione <input type="text" th:field="*{paeseProduzione}"></label>
+            <span th:if="${#fields.hasErrors('paeseProduzione')}" th:errors="*{paeseProduzione}">errore</span>
+        </div>
+
+        <div>
+            <label>Regista <input type="text" th:field="*{regista}"></label>
+            <span th:if="${#fields.hasErrors('regista')}" th:errors="*{regista}">errore</span>
+        </div>
+
+        <button type="submit">Salva</button>
+    </form>
+
+    <p><a th:href="@{/}">Torna alla Home</a></p>
+</body>
+</html>

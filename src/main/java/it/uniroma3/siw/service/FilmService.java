@@ -26,6 +26,15 @@ public class FilmService {
         return this.filmRepository.findById(id)
                 .orElseThrow(() -> new FilmNotFoundException(id));
     }
+	@Transactional(readOnly = true)
+	public boolean existsByTitoloAndAnno(String titolo,Integer anno) {
+		return this.filmRepository.existsByTitoloAndAnno(titolo, anno);
+	}
+	
+	@Transactional
+	public Film save(Film film) {
+		return this.filmRepository.save(film);
+	}
 	
 
 }
