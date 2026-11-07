@@ -18,7 +18,7 @@ public class ProiezioneController {
 
 	@GetMapping("/proiezioni")
 	public String tutteProiezioni(Model model) {
-		model.addAttribute("proiezioni", proiezioneService.findAll());
+		model.addAttribute("proiezioni", proiezioneService.findAllConDettagli());
 		return "proiezioni/tutteproiezioni";
 	}
 

@@ -46,6 +46,24 @@ public class ProiezioneService {
 		return this.proiezioneRepository.findAll();
 	}
 
+	// Per la pagina elenco: film, sala e festival arrivano gia' caricati (1 query invece di N+1)
+	@Transactional(readOnly = true)
+	public List<Proiezione> findAllConDettagli() {
+		return this.proiezioneRepository.findAllConDettagli();
+	}
+
+	@Transactional(readOnly = true)
+	public List<Proiezione> findByData(LocalDate data) {
+		return this.proiezioneRepository.findByDataOrderByOra(data);
+	}
+
+	// Programma di un festival (404 se il festival non esiste)
+	@Transactional(readOnly = true)
+	public List<Proiezione> findByFestival(Long festivalId) {
+		caricaFestival(festivalId);
+		return this.proiezioneRepository.findByFestivalIdOrderByDataAscOraAsc(festivalId);
+	}
+
 	@Transactional(readOnly = true)
 	public Proiezione findById(Long id) {
 		return this.proiezioneRepository.findById(id)

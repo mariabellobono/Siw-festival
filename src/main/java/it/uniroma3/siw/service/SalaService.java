@@ -3,6 +3,7 @@ package it.uniroma3.siw.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import it.uniroma3.siw.exception.OperazioneNonConsentitaException;
 import it.uniroma3.siw.exception.SalaNotFoundException;
 import it.uniroma3.siw.model.Sala;
 import it.uniroma3.siw.repository.SalaRepository;
@@ -33,6 +34,16 @@ public class SalaService {
 	@Transactional
 	public Sala save(Sala sala) {
 		return this.salaRepository.save(sala);
+	}
+
+	// ELIMINAZIONE: una sala con proiezioni (anche annullate: restano nello storico) non si cancella
+	@Transactional
+	public void elimina(Long id) {
+		Sala sala = findById(id);
+		if (!sala.getProiezioni().isEmpty()) {
+			throw new OperazioneNonConsentitaException("La sala ha delle proiezioni e non puo essere eliminata");
+		}
+		this.salaRepository.delete(sala);
 	}
 
 	// MODIFICA: si carica la sala dal database e si copiano solo i campi del modulo

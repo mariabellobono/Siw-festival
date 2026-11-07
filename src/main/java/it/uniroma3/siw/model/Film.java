@@ -44,13 +44,13 @@ public class Film extends EntitaBase{
 	@ManyToMany
 	private List<Festival> festival = new ArrayList<>();
 
-	@OneToMany(mappedBy = "film")
+	@OneToMany(mappedBy = "film",cascade = CascadeType.REMOVE)
 	private List<Proiezione> proiezioni = new ArrayList<>();
 
-	@OneToMany(mappedBy = "film")
+	@OneToMany(mappedBy = "film",cascade = CascadeType.REMOVE)
 	private List<Recensione> recensioni = new ArrayList<>();
 
-	@OneToMany(mappedBy = "film")
+	@OneToMany(mappedBy = "film",cascade = CascadeType.REMOVE)
 	private List<Interpretazione> interpretazioni = new ArrayList<>();
 
 	public String getTitolo() {

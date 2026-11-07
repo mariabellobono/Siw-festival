@@ -43,6 +43,38 @@ public class FestivalService {
         return this.festivalRepository.save(festival);
     }
 
+    // I film del festival in ordine di titolo; la lista LAZY viene letta dentro la transazione
+    @Transactional(readOnly = true)
+    public List<Film> filmDelFestival(Long id) {
+        List<Film> films = new ArrayList<>(findById(id).getFilms());
+        films.sort(Comparator.comparing(Film::getTitolo));
+        return films;
+    }
+
+    // MODIFICA: si carica il festival dal database e si copiano solo i campi del modulo
+    // (le liste di film e proiezioni non si toccano)
+    @Transactional
+    public Festival aggiorna(Long id, Festival dati) {
+        Festival festival = findById(id);
+        festival.setNome(dati.getNome());
+        festival.setAnno(dati.getAnno());
+        festival.setCitta(dati.getCitta());
+        festival.setDataInizio(dati.getDataInizio());
+        festival.setDataFine(dati.getDataFine());
+        festival.setDescrizione(dati.getDescrizione());
+        return this.festivalRepository.save(festival);
+    }
+
+    // ELIMINAZIONE: solo se il festival e' vuoto (nessun film e nessuna proiezione)
+    @Transactional
+    public void elimina(Long id) {
+        Festival festival = findById(id);
+        if (!festival.getFilms().isEmpty() || !festival.getProiezioni().isEmpty()) {
+            throw new OperazioneNonConsentitaException("Il festival ha film o proiezioni: rimuovili prima");
+        }
+        this.festivalRepository.delete(festival);
+    }
+
     // Film che NON partecipano ancora al festival (servono per la tendina "Aggiungi film")
     @Transactional(readOnly = true)
     public List<Film> filmNonPresenti(Long festivalId) {

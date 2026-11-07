@@ -1,6 +1,7 @@
 package it.uniroma3.siw.service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +34,29 @@ public class RecensioneService {
 	public Recensione findById(Long id) {
 		return this.recensioneRepository.findById(id)
 				.orElseThrow(() -> new RecensioneNotFoundException(id));
+	}
+
+	// Recensioni di un film (404 se il film non esiste), con l'autore gia' caricato
+	@Transactional(readOnly = true)
+	public List<Recensione> delFilm(Long filmId) {
+		this.filmRepository.findById(filmId).orElseThrow(() -> new FilmNotFoundException(filmId));
+		return this.recensioneRepository.findByFilmIdOrderByDataDescIdDesc(filmId);
+	}
+
+	@Transactional(readOnly = true)
+	public Double mediaVoti(Long filmId) {
+		return this.recensioneRepository.mediaVoti(filmId);
+	}
+
+	@Transactional(readOnly = true)
+	public long numero(Long filmId) {
+		return this.recensioneRepository.countByFilmId(filmId);
+	}
+
+	// id dell'anagrafica (Utente) di chi e' collegato con quello username
+	@Transactional(readOnly = true)
+	public Long idUtente(String username) {
+		return utenteDi(username).getId();
 	}
 
 	// La recensione dell'utente collegato per quel film, oppure null se non ne ha scritta una
