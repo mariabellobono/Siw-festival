@@ -39,7 +39,7 @@ final class RestMapper {
 
 	static FestivalDto festival(Festival f) {
 		return new FestivalDto(f.getId(), f.getNome(), f.getAnno(), f.getCitta(), f.getDataInizio(),
-				f.getDataFine(), f.getDescrizione());
+				f.getDataFine(), f.getDescrizione(), f.getPercorsoImmagine());
 	}
 
 	static SalaDto sala(Sala s) {

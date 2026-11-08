@@ -1,0 +1,262 @@
+/* ==========================================================
+   Festival del cinema - foglio di stile del sito classico
+   Per cambiare l'aspetto basta cambiare i colori qui sotto.
+   Ispirazione: sipario di velluto rosso, pellicola e biglietti del cinema.
+   ========================================================== */
+:root {
+  --rosso: #b3122a;         /* colore principale: pulsanti, strisce */
+  --rosso-scuro: #4a0812;   /* barra, titoli */
+  --rosso-nero: #240409;    /* sfondi molto scuri (pellicola) */
+  --crema: #fff8f0;         /* sfondo pagina */
+  --carta: #ffffff;         /* righe e riquadri */
+  --oro: #c9a24b;           /* dettagli */
+  --testo: #2a0d12;
+  --testo-tenue: #7a5a5f;
+  --bordo: #ead7d0;
+  --errore: #b3122a;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--crema);
+  color: var(--testo);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+main { max-width: 880px; margin: 0 auto; padding: 28px 18px 60px; }
+
+/* ---------- barra di navigazione (fragments/navbar.html) ---------- */
+.navbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 22px;
+  padding: 12px 24px;
+  background: var(--rosso-scuro);
+  border-bottom: 4px solid var(--oro);
+}
+.navbar a { color: #fff; font-weight: 700; letter-spacing: .4px; }
+.navbar a:hover { color: var(--oro); text-decoration: none; }
+.navbar .marchio { margin-right: 10px; color: var(--oro); font-size: 1.3rem; letter-spacing: 2px; text-transform: uppercase; }
+.navbar .menu, .navbar .accesso { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 18px; }
+.navbar .accesso { margin-left: auto; font-size: 15px; }
+.navbar .utente { color: #e8c9c9; font-style: italic; }
+.navbar form { margin: 0; }
+.navbar button { padding: 4px 14px; font-size: 14px; background: transparent; border: 1px solid var(--oro); color: var(--oro); }
+.navbar button:hover { background: var(--oro); color: var(--rosso-scuro); }
+.navbar .evidenza { padding: 4px 14px; border-radius: 20px; background: var(--oro); color: var(--rosso-scuro); }
+.navbar .evidenza:hover { background: #fff; color: var(--rosso-scuro); }
+
+/* ---------- titoli ---------- */
+h1 {
+  margin: 0 0 26px;
+  color: var(--rosso-scuro);
+  font-size: 2.1rem;
+  letter-spacing: .5px;
+}
+/* striscia di pellicola sotto ogni titolo principale: fascia scura con i fori */
+h1::after {
+  content: "";
+  display: block;
+  height: 14px;
+  margin-top: 10px;
+  background-color: var(--rosso-nero);
+  background-image: radial-gradient(circle, var(--crema) 3px, transparent 3.5px);
+  background-size: 18px 14px;
+  border-radius: 2px;
+}
+h2 { margin: 30px 0 12px; color: var(--rosso); font-size: 1.3rem; }
+
+/* ---------- link ---------- */
+a { color: var(--rosso); text-decoration: none; }
+a:hover { color: var(--rosso-scuro); text-decoration: underline; }
+main > a { display: inline-block; margin: 6px 16px 0 0; font-weight: 700; }
+
+/* ---------- liste: ogni voce e' una riga con una striscia rossa ---------- */
+ul { list-style: none; margin: 0 0 18px; padding: 0; }
+li {
+  margin-bottom: 10px;
+  padding: 12px 16px;
+  background: var(--carta);
+  border: 1px solid var(--bordo);
+  border-left: 5px solid var(--rosso);
+  border-radius: 4px;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+li:hover { transform: translateX(4px); box-shadow: 0 2px 8px rgba(74, 8, 18, .15); }
+
+/* le proiezioni come biglietti del cinema: bordo tratteggiato dorato e una stella */
+ul.biglietti li {
+  position: relative;
+  padding-left: 44px;
+  background: #fffdf6;
+  border: 2px dashed var(--oro);
+  border-radius: 8px;
+}
+ul.biglietti li::before {
+  content: "\2605";
+  position: absolute;
+  left: 15px;
+  top: 10px;
+  color: var(--oro);
+  font-size: 1.2rem;
+}
+
+p { margin: 0 0 12px; }
+
+/* ---------- moduli ---------- */
+form { margin-bottom: 18px; }
+form > div { margin-bottom: 14px; }
+label { display: inline-block; font-weight: 700; color: var(--rosso-scuro); }
+input[type="text"], input[type="password"], input[type="email"], input[type="number"],
+input[type="date"], input[type="time"], select, textarea {
+  display: block;
+  width: 100%;
+  max-width: 440px;
+  margin-top: 5px;
+  padding: 9px 11px;
+  border: 1px solid #cdb3ab;
+  border-radius: 4px;
+  background: #fff;
+  color: var(--testo);
+  font: inherit;
+}
+input:focus, select:focus, textarea:focus { outline: 2px solid var(--rosso); outline-offset: 1px; }
+textarea { min-height: 100px; }
+
+button {
+  padding: 9px 20px;
+  border: 0;
+  border-radius: 4px;
+  background: var(--rosso);
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .15s ease, transform .1s ease;
+}
+button:hover { background: var(--rosso-scuro); }
+button:active { transform: scale(.97); }
+li button { padding: 3px 11px; font-size: 14px; background: #7a5a5f; }
+li button:hover { background: var(--rosso-scuro); }
+
+/* ---------- messaggi ed errori ---------- */
+form span { color: var(--errore); font-size: 14px; }
+form p { color: var(--errore); }
+small { display: block; margin-top: 4px; color: var(--testo-tenue); font-size: 14px; }
+
+/* ---------- tabelle ---------- */
+table { width: 100%; border-collapse: collapse; background: var(--carta); }
+th, td { padding: 9px 12px; border-bottom: 1px solid var(--bordo); text-align: left; }
+th { background: var(--rosso-scuro); color: #fff; }
+
+/* ---------- home: testata con il sipario e riquadri ---------- */
+.hero {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 8px;
+  padding: 90px 32px 70px;
+  /* foto del sipario come sfondo, con uno strato rosso scuro per leggere il testo */
+  background: linear-gradient(rgba(74, 8, 18, .45), rgba(36, 4, 9, .8)),
+              url("../images/sipario.jpg") center 38% / cover no-repeat;
+  border-radius: 8px;
+  color: #fff;
+  text-align: center;
+}
+.hero h1 { color: #fff; font-size: 3rem; letter-spacing: 3px; text-transform: uppercase; text-shadow: 0 2px 8px rgba(0, 0, 0, .6); }
+.hero h1::after { margin: 14px auto 0; width: 220px; }
+.hero .sottotitolo { max-width: 540px; margin: 0 auto 22px; color: #f6dcd2; font-size: 1.1rem; }
+
+.pulsante {
+  display: inline-block;
+  margin: 6px 8px;
+  padding: 11px 26px;
+  border-radius: 4px;
+  background: var(--oro);
+  color: var(--rosso-scuro);
+  font-weight: 700;
+}
+.pulsante:hover { background: #fff; color: var(--rosso-scuro); text-decoration: none; }
+.pulsante.secondario { background: transparent; border: 2px solid #fff; color: #fff; }
+.pulsante.secondario:hover { background: #fff; color: var(--rosso-scuro); }
+
+/* il festival: foto della parete di pellicole e testo affiancati */
+.sezione-foto {
+  display: grid;
+  grid-template-columns: minmax(180px, 270px) 1fr;
+  gap: 28px;
+  align-items: center;
+  margin: 32px 0 8px;
+}
+.sezione-foto img {
+  display: block;
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+  border: 4px solid var(--rosso-nero);
+  border-radius: 6px;
+}
+.sezione-foto h2 { margin-top: 0; }
+
+.riquadri { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 14px; margin-bottom: 24px; }
+.riquadro {
+  display: block;
+  padding: 18px;
+  background: var(--carta);
+  border: 1px solid var(--bordo);
+  border-top: 5px solid var(--rosso);
+  border-radius: 6px;
+  color: var(--testo);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.riquadro strong { display: block; margin-bottom: 4px; color: var(--rosso-scuro); font-size: 1.15rem; }
+.riquadro span { color: var(--testo-tenue); font-size: 15px; }
+.riquadro:hover { transform: translateY(-4px); box-shadow: 0 6px 14px rgba(74, 8, 18, .18); text-decoration: none; }
+
+/* conteggi (home e pagine elenco), filtri e ordinamenti */
+.contatori { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin: 22px 0 8px; }
+.contatori div { padding: 14px 10px; background: var(--rosso-scuro); border-bottom: 4px solid var(--oro); border-radius: 6px; color: #fff; text-align: center; }
+.contatori strong { display: block; color: var(--oro); font-size: 2rem; line-height: 1.1; }
+.contatori span { font-size: 14px; }
+.conteggio { color: var(--testo-tenue); }
+.conteggio strong { color: var(--rosso-scuro); font-size: 1.15rem; }
+.filtri { margin-bottom: 8px; color: var(--testo-tenue); font-size: 15px; }
+.filtri a { display: inline-block; margin: 0 6px 6px 0; padding: 2px 12px; border: 1px solid var(--rosso); border-radius: 14px; }
+.filtri a:hover { background: var(--rosso); color: #fff; text-decoration: none; }
+
+/* area amministratore (visibile solo agli admin) */
+.admin-box { margin: 8px 0 24px; padding: 14px 18px; background: #fff3e6; border: 1px solid var(--oro); border-radius: 6px; }
+.admin-box h2 { margin-top: 0; }
+.admin-box ul { margin-bottom: 0; }
+
+hr { border: 0; border-top: 1px solid var(--bordo); margin: 22px 0; }
+
+@media (max-width: 560px) {
+  .navbar { padding: 10px 14px; }
+  .navbar .accesso { margin-left: 0; }
+  main { padding: 18px 12px 40px; }
+  h1 { font-size: 1.7rem; }
+  .hero { padding: 50px 18px 40px; }
+  .hero h1 { font-size: 2rem; }
+  .sezione-foto { grid-template-columns: 1fr; }
+  .sezione-foto img { height: 240px; }
+}
+
+/* ---- simboli dei festival, badge di stato, stelle ---- */
+.simbolo { width: 44px; height: 44px; vertical-align: middle; margin-right: 10px; border-radius: 8px; }
+.simbolo-grande { width: 96px; height: 96px; display: block; margin-bottom: 10px; border-radius: 14px; box-shadow: 0 3px 10px rgba(36, 4, 9, .35); }
+.stato { display: inline-block; padding: 1px 10px; border-radius: 12px; font-size: 12px; font-weight: 700; letter-spacing: .5px; border: 1px solid transparent; }
+.stato-SCHEDULED { background: #fff1cc; color: #7a5600; border-color: #c9a24b; }
+.stato-COMPLETED { background: #e3f6e5; color: #1d5a24; border-color: #7bbf84; }
+.stato-CANCELLED { background: #fde2e4; color: #9b1c2c; border-color: #e08a94; text-decoration: line-through; }
+.stelle { color: var(--oro, #c9a24b); letter-spacing: 2px; font-size: 1.1em; }
+
+/* ---- pulsanti admin (Modifica / Elimina): stessa forma ---- */
+.azioni { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 14px 0; }
+.azioni form { margin: 0; }
+.azioni a, .azioni button { display: inline-block; box-sizing: border-box; min-width: 150px; padding: 8px 18px; border: 1px solid var(--rosso, #b3122a); border-radius: 6px; background: var(--rosso, #b3122a); color: #fff; font: inherit; font-size: 15px; text-align: center; text-decoration: none; cursor: pointer; }
+.azioni a:hover, .azioni button:hover { background: var(--rosso-scuro, #4a0812); text-decoration: none; }

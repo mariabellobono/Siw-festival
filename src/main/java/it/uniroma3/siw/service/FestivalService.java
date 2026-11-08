@@ -43,6 +43,23 @@ public class FestivalService {
         return this.festivalRepository.save(festival);
     }
 
+    // ELENCO ORDINATO (?ordina=anno|citta, altrimenti per nome) e CONTEGGIO nel database
+    @Transactional(readOnly = true)
+    public List<Festival> elenco(String ordina) {
+        if ("anno".equals(ordina)) {
+            return this.festivalRepository.findAllByOrderByAnnoDesc();
+        }
+        if ("citta".equals(ordina)) {
+            return this.festivalRepository.findAllByOrderByCittaAsc();
+        }
+        return this.festivalRepository.findAllByOrderByNomeAsc();
+    }
+
+    @Transactional(readOnly = true)
+    public long numero() {
+        return this.festivalRepository.count();
+    }
+
     // I film del festival in ordine di titolo; la lista LAZY viene letta dentro la transazione
     @Transactional(readOnly = true)
     public List<Film> filmDelFestival(Long id) {
@@ -62,6 +79,7 @@ public class FestivalService {
         festival.setDataInizio(dati.getDataInizio());
         festival.setDataFine(dati.getDataFine());
         festival.setDescrizione(dati.getDescrizione());
+        festival.setImmagine(dati.getImmagine());
         return this.festivalRepository.save(festival);
     }
 

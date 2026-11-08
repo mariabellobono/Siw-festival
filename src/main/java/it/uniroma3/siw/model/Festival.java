@@ -36,6 +36,9 @@ public class Festival extends EntitaBase{
 	
 	private String descrizione;
 
+	// nome del file SVG del simbolo del festival (cartella static/images/festival); vuoto = simbolo predefinito
+	private String immagine;
+
 	// LISTE INIZIALIZZATE (vale per tutte le liste di questa classe).
 	// Perche': un oggetto creato con "new" (es. dalla form) avrebbe la lista null e
 	// getX().add(...) lancerebbe NullPointerException. Cosi' la lista e' sempre pronta.
@@ -129,4 +132,17 @@ public class Festival extends EntitaBase{
 		
 	}
 
+
+	public String getImmagine() {
+		return immagine;
+	}
+
+	public void setImmagine(String immagine) {
+		this.immagine = immagine;
+	}
+
+	// percorso pubblico del simbolo, usato da Thymeleaf e dalle API
+	public String getPercorsoImmagine() {
+		return "/images/festival/" + (immagine == null || immagine.isBlank() ? "default.svg" : immagine);
+	}
 }

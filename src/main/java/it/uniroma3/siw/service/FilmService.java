@@ -98,6 +98,50 @@ public class FilmService {
 		this.filmRepository.delete(film);
 	}
 
+	// ELENCO ORDINATO: "ordina" arriva dall'indirizzo (?ordina=anno). Valore assente o sconosciuto = per titolo.
+	@Transactional(readOnly = true)
+	public List<Film> elenco(String ordina) {
+		if ("titolo-desc".equals(ordina)) {
+			return this.filmRepository.findAllByOrderByTitoloDesc();
+		}
+		if ("anno".equals(ordina)) {
+			return this.filmRepository.findAllByOrderByAnnoAsc();
+		}
+		if ("anno-desc".equals(ordina)) {
+			return this.filmRepository.findAllByOrderByAnnoDesc();
+		}
+		if ("regista".equals(ordina)) {
+			return this.filmRepository.findAllByOrderByRegistaAsc();
+		}
+		return this.filmRepository.findAllByOrderByTitoloAsc();
+	}
+
+	@Transactional(readOnly = true)
+	public List<Film> findByGenere(String genere) {
+		return this.filmRepository.findByGenereOrderByTitolo(genere);
+	}
+
+	// CONTEGGI (select count(*) nel database: piu' efficiente che caricare la lista e contarla)
+	@Transactional(readOnly = true)
+	public long numero() {
+		return this.filmRepository.count();
+	}
+
+	@Transactional(readOnly = true)
+	public long numeroPerGenere(String genere) {
+		return this.filmRepository.countByGenere(genere);
+	}
+
+	@Transactional(readOnly = true)
+	public long numeroPerRegista(String regista) {
+		return this.filmRepository.countByRegista(regista);
+	}
+
+	@Transactional(readOnly = true)
+	public long numeroDelFestival(Long festivalId) {
+		return this.filmRepository.countByFestivalId(festivalId);
+	}
+
 	private String pulisci(String testo) {
 		return testo == null ? "" : testo.trim();
 	}

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import it.uniroma3.siw.service.SalaService;
 
@@ -17,8 +18,9 @@ public class SalaController {
 		
 	}
 	@GetMapping("/sale")
-	public String tutteSale(Model model) {
-		model.addAttribute("sale", salaService.findAll());
+	public String tutteSale(@RequestParam(name = "ordina", required = false) String ordina, Model model) {
+		model.addAttribute("sale", salaService.elenco(ordina));
+		model.addAttribute("totaleSale", salaService.numero());
 		return "sale/tuttesale";
 		
 	}

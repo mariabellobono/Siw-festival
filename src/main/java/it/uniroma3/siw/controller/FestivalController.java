@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import it.uniroma3.siw.service.FestivalService;
 
@@ -19,8 +20,9 @@ public class FestivalController {
 		
 	}
 	 @GetMapping("/festivals")
-	 public String tuttifestival(Model model) {
-		 model.addAttribute("festivals",this.festivalService.findAll());
+	 public String tuttifestival(@RequestParam(name = "ordina", required = false) String ordina, Model model) {
+		 model.addAttribute("festivals",this.festivalService.elenco(ordina));
+		 model.addAttribute("totaleFestival", this.festivalService.numero());
 		 return "festivals/tuttifestival";
 	 }
 	 

@@ -2,11 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <title>Proiezioni</title>
 </head>
 <body>
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    <main>
     <h1>Proiezioni</h1>
-    <ul>
+    <p class="conteggio"><strong th:text="${totaleProiezioni}">0</strong> proiezioni</p>
+    <p class="filtri">Ordina per:
+        <a th:href="@{/proiezioni(ordina='data')}">data e ora</a>
+        <a th:href="@{/proiezioni(ordina='sala')}">sala</a>
+        <a th:href="@{/proiezioni(ordina='film')}">film</a>
+    </p>
+    <ul class="biglietti">
         <!-- Una riga per ogni proiezione. Film, sala e festival sono oggetti collegati: si scende con il punto (proiezione.film.titolo). -->
         <li th:each="proiezione : ${proiezioni}">
             <a th:href="@{/proiezioni/{id}(id=${proiezione.id})}"
@@ -14,9 +23,10 @@
             - <span th:text="${proiezione.film.titolo}">Film</span>
             (<span th:text="${proiezione.sala.nome}">Sala</span>,
             <span th:text="${proiezione.festival.nome}">Festival</span>)
-            - <span th:text="${proiezione.stato}">Stato</span>
+            <span class="stato" th:classappend="'stato-' + ${proiezione.stato}" th:text="${proiezione.stato}">stato</span>
         </li>
     </ul>
     <a href="/">Home</a>
+</main>
 </body>
 </html>

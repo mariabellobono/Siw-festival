@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifica attore</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    <main>
+    <h1>Modifica attore</h1>
+
+    <form th:action="@{/admin/attori/{id}(id=${attore.id})}" th:object="${attore}" method="post">
+
+        <div>
+            <label>Nome <input type="text" th:field="*{nome}"></label>
+            <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">errore</span>
+        </div>
+
+        <div>
+            <label>Cognome <input type="text" th:field="*{cognome}"></label>
+            <span th:if="${#fields.hasErrors('cognome')}" th:errors="*{cognome}">errore</span>
+        </div>
+
+        <div>
+            <label>Data di nascita <input type="date" th:field="*{dataNascita}"></label>
+            <span th:if="${#fields.hasErrors('dataNascita')}" th:errors="*{dataNascita}">errore</span>
+        </div>
+
+        <div>
+            <label>Nazionalità <input type="text" th:field="*{nazionalita}"></label>
+            <span th:if="${#fields.hasErrors('nazionalita')}" th:errors="*{nazionalita}">errore</span>
+        </div>
+
+        <button type="submit">Salva</button>
+    </form>
+
+    <p><a th:href="@{/attori/{id}(id=${attore.id})}">Annulla</a></p>
+</main>
+</body>
+</html>

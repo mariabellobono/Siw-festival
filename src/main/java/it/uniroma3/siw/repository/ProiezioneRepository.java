@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import it.uniroma3.siw.model.Proiezione;
+import it.uniroma3.siw.model.Stato;
 
 public interface ProiezioneRepository extends CrudRepository<Proiezione, Long> {
 
@@ -21,6 +22,16 @@ public interface ProiezioneRepository extends CrudRepository<Proiezione, Long> {
 	@EntityGraph(attributePaths = { "film", "sala", "festival" })
 	@Query("select p from Proiezione p order by p.data, p.ora")
 	List<Proiezione> findAllConDettagli();
+
+	// ORDINAMENTI per sala e per film (poi per data e ora): film, sala e festival arrivano nella stessa query
+	@EntityGraph(attributePaths = { "film", "sala", "festival" })
+	List<Proiezione> findAllByOrderBySalaNomeAscDataAscOraAsc();
+
+	@EntityGraph(attributePaths = { "film", "sala", "festival" })
+	List<Proiezione> findAllByOrderByFilmTitoloAscDataAscOraAsc();
+
+	// CONTEGGIO per stato (es. quante proiezioni sono ancora programmate)
+	long countByStato(Stato stato);
 
 	// Proiezioni di un giorno (filtro per data dell'API), con film, sala e festival gia' caricati
 	@EntityGraph(attributePaths = { "film", "sala", "festival" })

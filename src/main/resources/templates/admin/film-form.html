@@ -2,9 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <title>Film</title>
 </head>
 <body>
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    <main>
     <h1 th:text="${film.id != null} ? 'Modifica film' : 'Nuovo film'">Nuovo film</h1>
 
     <!-- th:object collega il modulo all'oggetto "film" messo nel Model dal controller.
@@ -46,5 +49,6 @@
     </form>
 
     <p><a th:href="@{/}">Torna alla Home</a></p>
+</main>
 </body>
 </html>

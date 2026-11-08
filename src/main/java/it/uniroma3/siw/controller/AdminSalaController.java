@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import it.uniroma3.siw.exception.OperazioneNonConsentitaException;
 import it.uniroma3.siw.model.Sala;
 import it.uniroma3.siw.service.SalaService;
 import jakarta.validation.Valid;
@@ -56,5 +57,18 @@ public class AdminSalaController {
 
 		redirectAttributes.addFlashAttribute("messaggio", "Modifica effettuata");
 		return "redirect:/sale/" + id;
+	}
+
+	// ELIMINAZIONE: rifiutata se la sala ha proiezioni (restano nello storico)
+	@PostMapping("/admin/sale/{id}/elimina")
+	public String eliminaSala(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+		try {
+			salaService.elimina(id);
+			redirectAttributes.addFlashAttribute("messaggio", "Sala eliminata");
+			return "redirect:/sale";
+		} catch (OperazioneNonConsentitaException e) {
+			redirectAttributes.addFlashAttribute("messaggio", e.getMessage());
+			return "redirect:/sale/" + id;
+		}
 	}
 }

@@ -2,11 +2,35 @@
 <html xmlns:th="http://www.thymeleaf.org">  <!--DICHIARAZIONE PER UTILIZZARE THYMELEAF-->
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <title>Film</title>
 </head>
 <body>
-    <h1 th:text="${filtroRegista != null} ? 'Film di ' + ${filtroRegista} : 'Film'">Film</h1>
-    <p th:if="${filtroRegista != null}"><a th:href="@{/films}">Mostra tutti i film</a></p>
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    <main>
+    <p th:if="${messaggio}" th:text="${messaggio}">Messaggio</p>
+    <h1 th:text="${filtroRegista != null} ? 'Film di ' + ${filtroRegista} : (${filtroGenere != null} ? 'Genere: ' + ${filtroGenere} : 'Film')">Film</h1>
+
+    <!-- CONTEGGIO: i numeri sono calcolati dal database con count (non contando la lista) -->
+    <p class="conteggio">
+        <span th:if="${filtroRegista == null and filtroGenere == null}"><strong th:text="${totaleFilm}">0</strong> film in archivio</span>
+        <span th:if="${filtroRegista != null or filtroGenere != null}"><strong th:text="${numeroFiltrato}">0</strong>
+            film trovati su <span th:text="${totaleFilm}">0</span> - <a th:href="@{/films}">Mostra tutti i film</a></span>
+    </p>
+
+    <!-- FILTRO per genere: ogni genere presente e' un link /films?genere=... -->
+    <p class="filtri">Genere:
+        <a th:each="g : ${generi}" th:href="@{/films(genere=${g})}" th:text="${g}">Genere</a>
+    </p>
+
+    <!-- ORDINAMENTO (sull'elenco completo): /films?ordina=... -->
+    <p class="filtri" th:if="${filtroRegista == null and filtroGenere == null}">Ordina per:
+        <a th:href="@{/films(ordina='titolo')}">titolo A-Z</a>
+        <a th:href="@{/films(ordina='titolo-desc')}">titolo Z-A</a>
+        <a th:href="@{/films(ordina='anno')}">anno (dal più vecchio)</a>
+        <a th:href="@{/films(ordina='anno-desc')}">anno (dal più recente)</a>
+        <a th:href="@{/films(ordina='regista')}">regista</a>
+    </p>
     <ul>   <!--LISTA PUNTATA-->
         <li th:each="film : ${films}">    <!--ripete (e tutto quello che ha dentro) una volta per ogni elemento della lista festivals, e in ogni giro chiama l’elemento corrente festival-->
             <a th:href="@{/films/{id} (id=${film.id}) }"   
@@ -16,5 +40,6 @@
         </li>
     </ul>
     <a href="/">Home</a>
+</main>
 </body>
 </html>

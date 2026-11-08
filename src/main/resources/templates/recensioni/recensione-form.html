@@ -2,9 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <title>Recensione</title>
 </head>
 <body>
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    <main>
     <h1 th:text="${recensione.id != null} ? 'Modifica la recensione di ' + ${film.titolo} : 'Scrivi una recensione di ' + ${film.titolo}">Recensione</h1>
 
     <!-- Inserimento: invia a /recensioni/film/{filmId}; modifica (la recensione ha gia' un id): invia a /recensioni/{id} -->
@@ -25,5 +28,6 @@
     </form>
 
     <p><a th:href="@{/films/{id}(id=${film.id})}">Torna al film</a></p>
+</main>
 </body>
 </html>

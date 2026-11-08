@@ -45,6 +45,42 @@ public class AdminFestivalController {
 		return "redirect:/festivals/" + festival.getId();
 	}
 
+	// MODIFICA: stesso modulo dell'inserimento, gia' compilato
+	@GetMapping("/admin/festivals/{id}/edit")
+	public String modificaFestival(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("festival", festivalService.findById(id));
+		return "admin/festival-form";
+	}
+
+	@PostMapping("/admin/festivals/{id}")
+	public String aggiornaFestival(@PathVariable("id") Long id, @Valid @ModelAttribute("festival") Festival festival,
+			BindingResult errori, RedirectAttributes redirectAttributes) {
+		festival.setId(id); // l'id arriva dall'indirizzo, non dal modulo
+		if(!errori.hasErrors() && festival.getDataFine().isBefore(festival.getDataInizio())) {
+			errori.rejectValue("dataFine", "dataNonValida", "La data di fine non può essere prima di quella di inizio");
+		}
+		if(errori.hasErrors()) {
+			return "admin/festival-form";
+		}
+		festivalService.aggiorna(id, festival);
+
+		redirectAttributes.addFlashAttribute("messaggio", "Modifica effettuata");
+		return "redirect:/festivals/" + id;
+	}
+
+	// ELIMINAZIONE: il service rifiuta se il festival ha film o proiezioni; il messaggio torna sulla pagina del festival
+	@PostMapping("/admin/festivals/{id}/elimina")
+	public String eliminaFestival(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+		try {
+			festivalService.elimina(id);
+			redirectAttributes.addFlashAttribute("messaggio", "Festival eliminato");
+			return "redirect:/festivals";
+		} catch (OperazioneNonConsentitaException e) {
+			redirectAttributes.addFlashAttribute("messaggio", e.getMessage());
+			return "redirect:/festivals/" + id;
+		}
+	}
+
 	// ---------- FILM DEL FESTIVAL: associazione e rimozione ----------
 	@GetMapping("/admin/festivals/{id}/films")
 	public String gestisciFilm(@PathVariable("id") Long id, Model model) {

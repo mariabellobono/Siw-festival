@@ -15,9 +15,27 @@ public class AttoreService {
 		this.attoreRepository = attoreRepository;
 	}
 
+	// CONTEGGIO nel database
+	@Transactional(readOnly = true)
+	public long numero() {
+		return this.attoreRepository.count();
+	}
+
 	@Transactional(readOnly = true)
 	public Attore findById(Long id) {
 		return this.attoreRepository.findById(id)
 				.orElseThrow(() -> new AttoreNotFoundException(id));
+	}
+
+	// MODIFICA: si carica l'attore dal database e si copiano solo i campi del modulo
+	// (cosi' la lista delle interpretazioni non viene toccata)
+	@Transactional
+	public Attore aggiorna(Long id, Attore dati) {
+		Attore attore = findById(id);
+		attore.setNome(dati.getNome());
+		attore.setCognome(dati.getCognome());
+		attore.setDataNascita(dati.getDataNascita());
+		attore.setNazionalita(dati.getNazionalita());
+		return this.attoreRepository.save(attore);
 	}
 }

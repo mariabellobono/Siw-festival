@@ -36,6 +36,20 @@ public class SalaService {
 		return this.salaRepository.save(sala);
 	}
 
+	// ELENCO ORDINATO (?ordina=capienza, altrimenti per nome) e CONTEGGIO nel database
+	@Transactional(readOnly = true)
+	public java.util.List<Sala> elenco(String ordina) {
+		if ("capienza".equals(ordina)) {
+			return this.salaRepository.findAllByOrderByCapienzaDesc();
+		}
+		return this.salaRepository.findAllByOrderByNomeAsc();
+	}
+
+	@Transactional(readOnly = true)
+	public long numero() {
+		return this.salaRepository.count();
+	}
+
 	// ELIMINAZIONE: una sala con proiezioni (anche annullate: restano nello storico) non si cancella
 	@Transactional
 	public void elimina(Long id) {

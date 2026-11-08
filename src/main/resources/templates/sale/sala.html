@@ -2,9 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <title>Dettaglio sala</title>
 </head>
 <body>
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    <main>
     <p th:if="${messaggio}" th:text="${messaggio}">Messaggio</p>
     <div th:object="${sala}">
         <h1 th:text="*{nome}">Nome</h1>
@@ -13,11 +16,19 @@
         <h2>Proiezioni</h2>
         <ul>
             <li th:each="p : *{proiezioni}">
-                <a th:href="@{/proiezioni/{id}(id=${p.id})}" th:text="${p.data} + ' - ' +${p.ora} + ' - ' +${p.stato}">dettagli Proiezione</a>
+                <a th:href="@{/proiezioni/{id}(id=${p.id})}" th:text="${p.data} + ' - ' +${p.ora}">dettagli Proiezione</a>
+                <span class="stato" th:classappend="'stato-' + ${p.stato}" th:text="${p.stato}">stato</span>
             </li>
         </ul>
     </div>
-    <p th:if="${isAdmin}"><a th:href="@{/admin/sale/{id}/edit(id=${sala.id})}">Modifica sala</a></p>
+    <div th:if="${isAdmin}" class="azioni">
+        <a th:href="@{/admin/sale/{id}/edit(id=${sala.id})}">Modifica sala</a>
+        <form th:action="@{/admin/sale/{id}/elimina(id=${sala.id})}" method="post"
+              onsubmit="return confirm('Eliminare la sala? Si puo\' eliminare solo se non ha proiezioni.')">
+            <button type="submit">Elimina sala</button>
+        </form>
+    </div>
     <a href="/sale">Torna all'elenco</a>
+</main>
 </body>
 </html>

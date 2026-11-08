@@ -64,4 +64,12 @@ public class AdminFilmController {
 		redirectAttributes.addFlashAttribute("messaggio", "Modifica effettuata");
 		return "redirect:/films/" + id;
 	}
+
+	// ELIMINAZIONE: il film sparisce insieme a proiezioni, recensioni e cast (cascade REMOVE nel modello)
+	@PostMapping("/admin/films/{id}/elimina")
+	public String eliminaFilm(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+		filmService.elimina(id);
+		redirectAttributes.addFlashAttribute("messaggio", "Film eliminato");
+		return "redirect:/films";
+	}
 }

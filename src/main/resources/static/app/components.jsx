@@ -180,7 +180,7 @@ function DettaglioFilm({ id, utente }) {
         <h1>{film.titolo} <span className="piccolo">({film.anno})</span></h1>
         <p>Regia: <b>{film.regista}</b> &middot; {film.genere} &middot; {film.durata} min &middot; {film.paeseProduzione}</p>
         <p>
-          {film.mediaVoti !== null ? <span className="voto">&#9733; {film.mediaVoti}/5</span> : 'Nessun voto'}{' '}
+          {film.mediaVoti !== null ? <span className="voto"><Stelle voto={Math.round(film.mediaVoti)} /> {film.mediaVoti}/5</span> : 'Nessun voto'}{' '}
           <span className="piccolo">({film.numeroRecensioni} recensioni)</span>
         </p>
         <p>
@@ -200,7 +200,7 @@ function DettaglioFilm({ id, utente }) {
       {recensioni.length === 0 && <p>Ancora nessuna recensione.</p>}
       {recensioni.map((r) => (
         <div className="card" key={r.id}>
-          <span className="voto">&#9733; {r.voto}/5</span> &middot; <b>{r.autore}</b> <span className="piccolo">{r.data}</span>
+          <span className="voto"><Stelle voto={r.voto} /> {r.voto}/5</span> &middot; <b>{r.autore}</b> <span className="piccolo">{r.data}</span>
           <p>{r.testo}</p>
           {mia && mia.id === r.id && !inModifica && (
             <div className="riga">
@@ -319,6 +319,12 @@ function FormFilm({ id, utente }) {
 }
 
 // ---------- FESTIVAL ----------
+// stelle del voto (1-5): piene = voto, vuote = il resto
+function Stelle({ voto }) {
+  const v = Math.max(0, Math.min(5, voto));
+  return <span className="stelle">{'\u2605'.repeat(v) + '\u2606'.repeat(5 - v)}</span>;
+}
+
 function ListaFestival() {
   const [festival, setFestival] = useState(null);
   const [errore, setErrore] = useState(null);
@@ -334,6 +340,7 @@ function ListaFestival() {
       {!festival && !errore && <p>Caricamento...</p>}
       {festival && festival.map((f) => (
         <div className="card" key={f.id}>
+          <img className="simbolo" src={f.immagine} alt="" />
           <a href={'#/festival/' + f.id}><b>{f.nome}</b> ({f.anno})</a>
           <div className="piccolo">{f.citta} &middot; dal {f.dataInizio} al {f.dataFine}</div>
         </div>
@@ -361,6 +368,7 @@ function DettaglioFestival({ id }) {
     <div>
       <p><a href="#/festival">&larr; Tutti i festival</a></p>
       <div className="card">
+        <img className="simbolo-grande" src={festival.immagine} alt="" />
         <h1>{festival.nome} <span className="piccolo">({festival.anno})</span></h1>
         <p>{festival.citta} &middot; dal {festival.dataInizio} al {festival.dataFine}</p>
         <p>{festival.descrizione}</p>
@@ -395,7 +403,7 @@ function TabellaProiezioni({ proiezioni }) {
             <td><a href={'#/film/' + p.filmId}>{p.filmTitolo}</a></td>
             <td>{p.salaNome}</td>
             <td><a href={'#/festival/' + p.festivalId}>{p.festivalNome}</a></td>
-            <td>{p.stato}</td>
+            <td><span className={'stato stato-' + p.stato}>{p.stato}</span></td>
           </tr>
         ))}
       </tbody>

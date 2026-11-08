@@ -22,17 +22,26 @@ public class FilmController {
 	}
 	
 	@GetMapping("/films")
-	public String tuttiFilms(@RequestParam(name = "regista", required = false) String regista, Model model) {
-		// Con ?regista=Nome si mostrano solo i film di quel regista, altrimenti tutti
+	public String tuttiFilms(@RequestParam(name = "regista", required = false) String regista,
+			@RequestParam(name = "genere", required = false) String genere,
+			@RequestParam(name = "ordina", required = false) String ordina, Model model) {
+		// Tre modi di vedere l'elenco: ?regista=Nome, ?genere=Nome oppure tutti (ordinati con ?ordina=...)
 		if (regista != null && !regista.isBlank()) {
 			model.addAttribute("films", filmService.findByRegista(regista));
 			model.addAttribute("filtroRegista", regista);
+			model.addAttribute("numeroFiltrato", filmService.numeroPerRegista(regista)); // conteggio fatto dal database
+		} else if (genere != null && !genere.isBlank()) {
+			model.addAttribute("films", filmService.findByGenere(genere));
+			model.addAttribute("filtroGenere", genere);
+			model.addAttribute("numeroFiltrato", filmService.numeroPerGenere(genere));
 		} else {
-			model.addAttribute("films", filmService.findAll());
+			model.addAttribute("films", filmService.elenco(ordina));
 		}
+		model.addAttribute("totaleFilm", filmService.numero());
+		model.addAttribute("generi", filmService.generi());
 		return "films/tuttifilms";
-		
 	}
+
 	@GetMapping("/films/{id}")
 	public String singoloFilm(@PathVariable("id")Long id, Authentication authentication, Model model) {
 		model.addAttribute("film", filmService.findById(id));

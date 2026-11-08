@@ -37,7 +37,7 @@ public final class ApiDto {
 	}
 
 	public record FestivalDto(Long id, String nome, Integer anno, String citta, LocalDate dataInizio,
-			LocalDate dataFine, String descrizione) {
+			LocalDate dataFine, String descrizione, String immagine) {
 	}
 
 	public record SalaDto(Long id, String nome, String indirizzo, Integer capienza) {

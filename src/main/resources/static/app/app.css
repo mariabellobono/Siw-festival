@@ -24,3 +24,12 @@ button:disabled { opacity: .5; cursor: default; }
 table { width: 100%; border-collapse: collapse; background: #fff; }
 th, td { text-align: left; padding: 8px; border-bottom: 1px solid #ddd; }
 .paginazione { display: flex; gap: 12px; align-items: center; justify-content: center; margin: 16px 0; }
+
+/* ---- simboli dei festival, badge di stato, stelle ---- */
+.simbolo { width: 44px; height: 44px; vertical-align: middle; margin-right: 10px; border-radius: 8px; }
+.simbolo-grande { width: 96px; height: 96px; display: block; margin-bottom: 10px; border-radius: 14px; box-shadow: 0 3px 10px rgba(36, 4, 9, .35); }
+.stato { display: inline-block; padding: 1px 10px; border-radius: 12px; font-size: 12px; font-weight: 700; letter-spacing: .5px; border: 1px solid transparent; }
+.stato-SCHEDULED { background: #fff1cc; color: #7a5600; border-color: #c9a24b; }
+.stato-COMPLETED { background: #e3f6e5; color: #1d5a24; border-color: #7bbf84; }
+.stato-CANCELLED { background: #fde2e4; color: #9b1c2c; border-color: #e08a94; text-decoration: line-through; }
+.stelle { color: #b8860b; letter-spacing: 2px; font-size: 1.1em; }

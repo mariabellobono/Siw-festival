@@ -2,10 +2,19 @@
 <html xmlns:th="http://www.thymeleaf.org">  <!--DICHIARAZIONE PER UTILIZZARE THYMELEAF-->
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <title>Sale</title>
 </head>
 <body>
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    <main>
+    <p th:if="${messaggio}" th:text="${messaggio}">Messaggio</p>
     <h1>Sale</h1>
+    <p class="conteggio"><strong th:text="${totaleSale}">0</strong> sale</p>
+    <p class="filtri">Ordina per:
+        <a th:href="@{/sale(ordina='nome')}">nome</a>
+        <a th:href="@{/sale(ordina='capienza')}">capienza (dalla più grande)</a>
+    </p>
     <ul>   <!--LISTA PUNTATA-->
         <li th:each="sala : ${sale}">   
             <a th:href="@{/sale/{id}(id=${sala.id})}"   
@@ -15,5 +24,6 @@
         </li>
     </ul>
     <a href="/">Home</a>
+</main>
 </body>
 </html>

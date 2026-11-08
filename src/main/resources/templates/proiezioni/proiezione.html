@@ -2,14 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <title>Dettaglio proiezione</title>
 </head>
 <body>
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    <main>
     <p th:if="${messaggio}" th:text="${messaggio}">Messaggio</p>
     <div th:object="${proiezione}">
         <h1 th:text="*{film.titolo}">Titolo del film</h1>
         <p>Data: <span th:text="*{data}">2026-11-10</span> alle <span th:text="*{ora}">21:00</span></p>
-        <p>Stato: <span th:text="*{stato}">SCHEDULED</span></p>
+        <p>Stato: <span class="stato" th:classappend="'stato-' + *{stato}" th:text="*{stato}">stato</span></p>
 
         <!-- Tre link verso le entita' collegate: dentro th:object si usa *{...} anche per film.id, sala.id, festival.id -->
         <p>Film: <a th:href="@{/films/{id}(id=*{film.id})}" th:text="*{film.titolo}">Film</a></p>
@@ -24,5 +27,6 @@
         </form>
     </div>
     <a href="/proiezioni">Torna all'elenco</a>
+</main>
 </body>
 </html>

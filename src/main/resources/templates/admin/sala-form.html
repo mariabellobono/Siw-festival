@@ -2,9 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <title>Sala</title>
 </head>
 <body>
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    <main>
     <h1 th:text="${sala.id != null} ? 'Modifica sala' : 'Nuova sala'">Nuova sala</h1>
 
     <form th:action="${sala.id != null} ? @{/admin/sale/{id}(id=${sala.id})} : @{/admin/sale}" th:object="${sala}" method="post">
@@ -28,5 +31,6 @@
     </form>
 
     <p><a th:href="@{/}">Torna alla Home</a></p>
+</main>
 </body>
 </html>

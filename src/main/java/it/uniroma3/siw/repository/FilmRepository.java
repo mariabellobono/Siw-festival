@@ -44,4 +44,19 @@ public interface FilmRepository extends CrudRepository<Film, Long> {
 	@Query("select distinct f.genere from Film f order by f.genere")
 	List<String> findGeneri();
 
+	// ORDINAMENTI: la parola chiave OrderBy + il campo + Asc/Desc diventa l'"order by" della query
+	List<Film> findAllByOrderByTitoloAsc();
+	List<Film> findAllByOrderByTitoloDesc();
+	List<Film> findAllByOrderByAnnoAsc();
+	List<Film> findAllByOrderByAnnoDesc();
+	List<Film> findAllByOrderByRegistaAsc();
+
+	// FILTRO per genere (valore esatto), in ordine di titolo
+	List<Film> findByGenereOrderByTitolo(String genere);
+
+	// CONTEGGI fatti dal database: countBy... = select count(*) ... where ...
+	long countByGenere(String genere);
+	long countByRegista(String regista);
+	long countByFestivalId(Long festivalId);
+
 }

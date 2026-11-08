@@ -1,39 +1,64 @@
-
-<!DOCTYPE html> 
-<html  xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">  <!--USA LA CODIFICA PER IL TESTO-->
-    <title>FESTIVAL CINEMATOGRAFICI</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Festival del cinema</title>
 </head>
 <body>
-    <h1>Festival del cinema</h1>
-    <a href="/festivals">Festival</a>
-    <a href="/films">Film</a>
-	<a href="/sale">Sala</a>
-	<a href="/proiezioni">Proiezioni</a>
-	<a href="/app/">App React</a>
-	<!-- Se NON sei loggata -->
-	<p th:if="${userDetails == null}">
-	    <a href="/login">Accedi</a> | <a href="/register">Registrati</a>
-	</p>
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    <main>
+        <!-- testata: la foto del sipario e' lo sfondo (vedi .hero nel CSS) -->
+        <section class="hero">
+            <h1>Festival del cinema</h1>
+            <p class="sottotitolo">Film, festival, sale e proiezioni in un unico programma.
+                Scopri cosa e' in cartellone e leggi le recensioni del pubblico.</p>
+            <p>
+                <a class="pulsante" th:href="@{/proiezioni}">Vedi le proiezioni</a>
+                <a class="pulsante secondario" th:href="@{/films}">Sfoglia i film</a>
+            </p>
+        </section>
 
-	<!-- Se sei loggata -->
-	<div th:if="${userDetails != null}">
-	    <p>Ciao, <span th:text="${userDetails.username}">utente</span></p>
-	    <!-- Visibile solo se l'utente ha l'autorità ADMIN -->
-	    <div th:if="${userDetails.authorities.?[authority == 'ADMIN'].size() > 0}">
-	        <p><strong>Area amministratore</strong></p>
-	        <ul>
-	            <li><a th:href="@{/admin/films/new}">Inserisci un nuovo film</a></li>
-	            <li><a th:href="@{/admin/festivals/new}">Inserisci un nuovo festival</a></li>
-	            <li><a th:href="@{/admin/sale/new}">Inserisci una nuova sala</a></li>
-	            <li><a th:href="@{/admin/proiezioni/new}">Programma una nuova proiezione</a></li>
-	        </ul>
-	    </div>
-	    <form th:action="@{/logout}" method="post">
-	        <button type="submit">Logout</button>
-	    </form>
-	</div>
+        <!-- fascia con i totali: ogni numero e' un count(*) fatto dal database (HomeController) -->
+        <div class="contatori">
+            <div><strong th:text="${numeroFilm}">0</strong><span>film</span></div>
+            <div><strong th:text="${numeroFestival}">0</strong><span>festival</span></div>
+            <div><strong th:text="${numeroSale}">0</strong><span>sale</span></div>
+            <div><strong th:text="${numeroAttori}">0</strong><span>attori</span></div>
+            <div><strong th:text="${numeroProgrammate}">0</strong><span>proiezioni in programma</span></div>
+        </div>
 
+        <!-- il festival: foto a sinistra, testo a destra -->
+        <section class="sezione-foto">
+            <img th:src="@{/images/pellicole.jpg}" alt="Parete di pellicole">
+            <div>
+                <h2>Il festival</h2>
+                <p>Ogni festival ha i suoi film, le sue sale e il suo programma di proiezioni.
+                    Cerca un film per genere o per regista, guarda il cast e scopri dove e quando viene proiettato.</p>
+                <p><a class="pulsante" th:href="@{/festivals}">Scopri i festival</a></p>
+            </div>
+        </section>
+
+        <h2>Esplora</h2>
+        <div class="riquadri">
+            <a class="riquadro" th:href="@{/festivals}"><strong>Festival</strong><span>Edizioni, periodi e film partecipanti</span></a>
+            <a class="riquadro" th:href="@{/films}"><strong>Film</strong><span>Registi, cast e recensioni</span></a>
+            <a class="riquadro" th:href="@{/sale}"><strong>Sale</strong><span>Dove si proietta</span></a>
+            <a class="riquadro" th:href="@{/proiezioni}"><strong>Proiezioni</strong><span>Il programma giorno per giorno</span></a>
+        </div>
+
+        <!-- Visibile solo se l'utente ha l'autorita' ADMIN -->
+        <div class="admin-box" th:if="${isAdmin}">
+            <h2>Area amministratore</h2>
+            <ul>
+                <li><a th:href="@{/admin/films/new}">Inserisci un nuovo film</a></li>
+                <li><a th:href="@{/admin/festivals/new}">Inserisci un nuovo festival</a></li>
+                <li><a th:href="@{/admin/sale/new}">Inserisci una nuova sala</a></li>
+                <li><a th:href="@{/admin/proiezioni/new}">Programma una nuova proiezione</a></li>
+            </ul>
+        </div>
+
+        <p th:if="${userDetails == null}"><a th:href="@{/login}">Accedi</a> o <a th:href="@{/register}">registrati</a> per scrivere una recensione.</p>
+    </main>
 </body>
 </html>

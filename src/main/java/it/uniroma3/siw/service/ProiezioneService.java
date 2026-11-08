@@ -52,6 +52,28 @@ public class ProiezioneService {
 		return this.proiezioneRepository.findAllConDettagli();
 	}
 
+	// ELENCO ORDINATO (?ordina=sala|film, altrimenti per data e ora) e CONTEGGI nel database
+	@Transactional(readOnly = true)
+	public List<Proiezione> elenco(String ordina) {
+		if ("sala".equals(ordina)) {
+			return this.proiezioneRepository.findAllByOrderBySalaNomeAscDataAscOraAsc();
+		}
+		if ("film".equals(ordina)) {
+			return this.proiezioneRepository.findAllByOrderByFilmTitoloAscDataAscOraAsc();
+		}
+		return this.proiezioneRepository.findAllConDettagli();
+	}
+
+	@Transactional(readOnly = true)
+	public long numero() {
+		return this.proiezioneRepository.count();
+	}
+
+	@Transactional(readOnly = true)
+	public long numeroPerStato(Stato stato) {
+		return this.proiezioneRepository.countByStato(stato);
+	}
+
 	@Transactional(readOnly = true)
 	public List<Proiezione> findByData(LocalDate data) {
 		return this.proiezioneRepository.findByDataOrderByOra(data);

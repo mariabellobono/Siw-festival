@@ -2,9 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <title>Dettaglio attore</title>
 </head>
 <body>
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    <main>
     <div th:object="${attore}">
         <h1 th:text="*{nome} + ' ' + *{cognome}">Nome Cognome</h1>
         <p>Nato il <span th:text="*{dataNascita}">data</span> - <span th:text="*{nazionalita}">Paese</span></p>
@@ -18,6 +21,8 @@
             </li>
         </ul>
     </div>
+    <p th:if="${isAdmin}"><a th:href="@{/admin/attori/{id}/edit(id=${attore.id})}">Modifica attore</a></p>
     <a href="/films">Torna ai film</a>
+</main>
 </body>
 </html>

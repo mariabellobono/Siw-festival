@@ -2,11 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <title>Dettaglio festival</title>
 </head>
 <body>
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    <main>
     <p th:if="${messaggio}" th:text="${messaggio}">Messaggio</p>
     <div th:object="${festival}">
+        <img class="simbolo-grande" th:src="@{*{percorsoImmagine}}" alt="">
         <h1 th:text="*{nome}">Nome</h1>
         <p><span th:text="*{citta}">Città</span>, <span th:text="*{anno}">2025</span></p>
         <p>Dal <span th:text="*{dataInizio}">data</span> al <span th:text="*{dataFine}">data</span></p>
@@ -24,11 +28,20 @@
         <ul>
             <li th:each="p : *{proiezioni}">
                 <a th:href="@{/proiezioni/{id}(id=${p.id})}"
-                   th:text="${p.data} + ' ' + ${p.ora} + ' - ' + ${p.film.titolo} + ' - ' + ${p.sala.nome} + ' - ' + ${p.stato}">Proiezione</a>
+                   th:text="${p.data} + ' ' + ${p.ora} + ' - ' + ${p.film.titolo} + ' - ' + ${p.sala.nome}">Proiezione</a>
+                <span class="stato" th:classappend="'stato-' + ${p.stato}" th:text="${p.stato}">stato</span>
             </li>
         </ul>
     </div>
     <p th:if="${isAdmin}"><a th:href="@{/admin/festivals/{id}/films(id=${festival.id})}">Gestisci film del festival</a></p>
+    <div th:if="${isAdmin}" class="azioni">
+        <a th:href="@{/admin/festivals/{id}/edit(id=${festival.id})}">Modifica festival</a>
+        <form th:action="@{/admin/festivals/{id}/elimina(id=${festival.id})}" method="post"
+              onsubmit="return confirm('Eliminare il festival? Si puo\' eliminare solo se non ha film né proiezioni.')">
+            <button type="submit">Elimina festival</button>
+        </form>
+    </div>
     <a href="/festivals">Torna all'elenco</a>
+</main>
 </body>
 </html>

@@ -2,12 +2,23 @@
 <html xmlns:th="http://www.thymeleaf.org">  <!--DICHIARAZIONE PER UTILIZZARE THYMELEAF-->
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <title>Festival</title>
 </head>
 <body>
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    <main>
+    <p th:if="${messaggio}" th:text="${messaggio}">Messaggio</p>
     <h1>Festival</h1>
+    <p class="conteggio"><strong th:text="${totaleFestival}">0</strong> festival in archivio</p>
+    <p class="filtri">Ordina per:
+        <a th:href="@{/festivals(ordina='nome')}">nome</a>
+        <a th:href="@{/festivals(ordina='anno')}">anno (dal più recente)</a>
+        <a th:href="@{/festivals(ordina='citta')}">città</a>
+    </p>
     <ul>  
         <li th:each="festival : ${festivals}">    <!--ripete (e tutto quello che ha dentro) una volta per ogni elemento della lista festivals, e in ogni giro chiama l’elemento corrente festival-->
+            <img class="simbolo" th:src="@{${festival.percorsoImmagine}}" alt="">
             <a th:href="@{/festivals/{id}(id=${festival.id})}"   
                th:text="${festival.nome}">Nome</a>
             - <span th:text="${festival.citta}">Città</span>
@@ -15,5 +26,6 @@
         </li>
     </ul>
     <a href="/">Home</a>
+</main>
 </body>
 </html>

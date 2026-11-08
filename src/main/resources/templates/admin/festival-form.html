@@ -2,12 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <title>Nuovo festival</title>
 </head>
 <body>
-    <h1>Nuovo festival</h1>
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+    <main>
+    <h1 th:text="${festival.id != null} ? 'Modifica festival' : 'Nuovo festival'">Nuovo festival</h1>
 
-    <form th:action="@{/admin/festivals}" th:object="${festival}" method="post">
+    <form th:action="${festival.id != null} ? @{/admin/festivals/{id}(id=${festival.id})} : @{/admin/festivals}" th:object="${festival}" method="post">
 
         <div>
             <label>Nome <input type="text" th:field="*{nome}"></label>
@@ -38,9 +41,22 @@
             <label>Descrizione <textarea th:field="*{descrizione}" rows="4" cols="40"></textarea></label>
         </div>
 
+        <div>
+            <label>Simbolo
+                <select th:field="*{immagine}">
+                    <option value="">Predefinito</option>
+                    <option value="clacchetta.svg">Ciak</option>
+                    <option value="pellicola.svg">Pellicola</option>
+                    <option value="poltrona.svg">Poltrona</option>
+                    <option value="stella.svg">Stella</option>
+                </select>
+            </label>
+        </div>
+
         <button type="submit">Salva</button>
     </form>
 
     <p><a th:href="@{/}">Torna alla Home</a></p>
+</main>
 </body>
 </html>

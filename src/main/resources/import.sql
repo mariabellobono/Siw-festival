@@ -17,18 +17,18 @@
 -- ==========================================================================
 
 -- Festival PASSATI
-insert into festival (id, nome, anno, citta, data_inizio, data_fine, descrizione) values (nextval('festival_seq'), 'Troisi Festival', 2025, 'Roma', '2025-09-18', '2025-09-23', 'Omaggio artistico al cinema agrodolce di Massimo Troisi');
-insert into festival (id, nome, anno, citta, data_inizio, data_fine, descrizione) values (nextval('festival_seq'), 'Torino Cinema Classico', 2024, 'Torino', '2024-11-05', '2024-11-10', 'Rassegna dei capolavori del cinema italiano del dopoguerra e del boom');
-insert into festival (id, nome, anno, citta, data_inizio, data_fine, descrizione) values (nextval('festival_seq'), 'Festival dei Maestri del Cinema', 2026, 'Bologna', '2026-03-12', '2026-03-18', 'I grandi maestri della regia internazionale, dal muto agli anni Settanta');
+insert into festival (id, nome, anno, citta, data_inizio, data_fine, descrizione, immagine) values (nextval('festival_seq'), 'Troisi Festival', 2025, 'Roma', '2025-09-18', '2025-09-23', 'Omaggio artistico al cinema agrodolce di Massimo Troisi', 'poltrona.svg');
+insert into festival (id, nome, anno, citta, data_inizio, data_fine, descrizione, immagine) values (nextval('festival_seq'), 'Torino Cinema Classico', 2024, 'Torino', '2024-11-05', '2024-11-10', 'Rassegna dei capolavori del cinema italiano del dopoguerra e del boom', 'pellicola.svg');
+insert into festival (id, nome, anno, citta, data_inizio, data_fine, descrizione, immagine) values (nextval('festival_seq'), 'Festival dei Maestri del Cinema', 2026, 'Bologna', '2026-03-12', '2026-03-18', 'I grandi maestri della regia internazionale, dal muto agli anni Settanta', 'clacchetta.svg');
 
 -- Festival PRESENTI (in corso)
-insert into festival (id, nome, anno, citta, data_inizio, data_fine, descrizione) values (nextval('festival_seq'), 'Cinema in Laguna', 2026, 'Venezia', '2026-10-29', '2026-11-05', 'Il grande cinema d''autore di tutto il mondo sulle rive della laguna');
-insert into festival (id, nome, anno, citta, data_inizio, data_fine, descrizione) values (nextval('festival_seq'), 'Napoli Film Days', 2026, 'Napoli', '2026-11-01', '2026-11-08', 'Otto giorni di cinema italiano, tra Napoli, commedia e racconto civile');
+insert into festival (id, nome, anno, citta, data_inizio, data_fine, descrizione, immagine) values (nextval('festival_seq'), 'Cinema in Laguna', 2026, 'Venezia', '2026-10-29', '2026-11-05', 'Il grande cinema d''autore di tutto il mondo sulle rive della laguna', 'stella.svg');
+insert into festival (id, nome, anno, citta, data_inizio, data_fine, descrizione, immagine) values (nextval('festival_seq'), 'Napoli Film Days', 2026, 'Napoli', '2026-11-01', '2026-11-08', 'Otto giorni di cinema italiano, tra Napoli, commedia e racconto civile', 'poltrona.svg');
 
 -- Festival FUTURI
-insert into festival (id, nome, anno, citta, data_inizio, data_fine, descrizione) values (nextval('festival_seq'), 'Torino Notte Nera', 2027, 'Torino', '2027-01-20', '2027-01-26', 'Una settimana di noir, thriller e suspense');
-insert into festival (id, nome, anno, citta, data_inizio, data_fine, descrizione) values (nextval('festival_seq'), 'Fellini Cinema Award', 2027, 'Rimini', '2027-04-14', '2027-04-20', 'Opere che sfidano il realismo per esplorare il sogno');
-insert into festival (id, nome, anno, citta, data_inizio, data_fine, descrizione) values (nextval('festival_seq'), 'Roma Classic Cinema', 2027, 'Roma', '2027-06-10', '2027-06-16', 'I classici che hanno fatto la storia del cinema, tra western, kolossal e commedia');
+insert into festival (id, nome, anno, citta, data_inizio, data_fine, descrizione, immagine) values (nextval('festival_seq'), 'Torino Notte Nera', 2027, 'Torino', '2027-01-20', '2027-01-26', 'Una settimana di noir, thriller e suspense', 'pellicola.svg');
+insert into festival (id, nome, anno, citta, data_inizio, data_fine, descrizione, immagine) values (nextval('festival_seq'), 'Fellini Cinema Award', 2027, 'Rimini', '2027-04-14', '2027-04-20', 'Opere che sfidano il realismo per esplorare il sogno', 'stella.svg');
+insert into festival (id, nome, anno, citta, data_inizio, data_fine, descrizione, immagine) values (nextval('festival_seq'), 'Roma Classic Cinema', 2027, 'Roma', '2027-06-10', '2027-06-16', 'I classici che hanno fatto la storia del cinema, tra western, kolossal e commedia', 'clacchetta.svg');
 
 -- ==========================================================================
 -- 2. FILM (42 film reali, ciascuno inserito una volta sola)
