@@ -37,7 +37,7 @@
         <ul>
             <li th:each="p : *{proiezioni}">
                 <a th:href="@{/proiezioni/{id}(id=${p.id})}"
-                   th:text="${p.data} + ' ' + ${p.ora} + ' - ' + ${p.sala.nome} + ' (' + ${p.festival.nome} + ')">Proiezione</a>
+                   th:text="${p.data} + ' ' + ${p.ora} + ' - ' + ${p.sala.nome} + ' (' + ${p.festival.nome} + ')'">Proiezione</a>
                 <span class="stato" th:classappend="'stato-' + ${p.stato}" th:text="${p.stato}">stato</span>
             </li>
         </ul>

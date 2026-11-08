@@ -19,15 +19,6 @@
             </p>
         </section>
 
-        <!-- fascia con i totali: ogni numero e' un count(*) fatto dal database (HomeController) -->
-        <div class="contatori">
-            <div><strong th:text="${numeroFilm}">0</strong><span>film</span></div>
-            <div><strong th:text="${numeroFestival}">0</strong><span>festival</span></div>
-            <div><strong th:text="${numeroSale}">0</strong><span>sale</span></div>
-            <div><strong th:text="${numeroAttori}">0</strong><span>attori</span></div>
-            <div><strong th:text="${numeroProgrammate}">0</strong><span>proiezioni in programma</span></div>
-        </div>
-
         <!-- il festival: foto a sinistra, testo a destra -->
         <section class="sezione-foto">
             <img th:src="@{/images/pellicole.jpg}" alt="Parete di pellicole">

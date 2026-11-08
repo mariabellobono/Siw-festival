@@ -10,11 +10,6 @@
     <main>
     <p th:if="${messaggio}" th:text="${messaggio}">Messaggio</p>
     <h1>Sale</h1>
-    <p class="conteggio"><strong th:text="${totaleSale}">0</strong> sale</p>
-    <p class="filtri">Ordina per:
-        <a th:href="@{/sale(ordina='nome')}">nome</a>
-        <a th:href="@{/sale(ordina='capienza')}">capienza (dalla più grande)</a>
-    </p>
     <ul>   <!--LISTA PUNTATA-->
         <li th:each="sala : ${sale}">   
             <a th:href="@{/sale/{id}(id=${sala.id})}"   

@@ -10,12 +10,6 @@
     <main>
     <p th:if="${messaggio}" th:text="${messaggio}">Messaggio</p>
     <h1>Festival</h1>
-    <p class="conteggio"><strong th:text="${totaleFestival}">0</strong> festival in archivio</p>
-    <p class="filtri">Ordina per:
-        <a th:href="@{/festivals(ordina='nome')}">nome</a>
-        <a th:href="@{/festivals(ordina='anno')}">anno (dal più recente)</a>
-        <a th:href="@{/festivals(ordina='citta')}">città</a>
-    </p>
     <ul>  
         <li th:each="festival : ${festivals}">    <!--ripete (e tutto quello che ha dentro) una volta per ogni elemento della lista festivals, e in ogni giro chiama l’elemento corrente festival-->
             <img class="simbolo" th:src="@{${festival.percorsoImmagine}}" alt="">

@@ -32,10 +32,14 @@ function App() {
     pagina = <FormFilm key={p[1]} id={p[1]} utente={utente} />;
   } else if (p[0] === 'film' && p[1]) {
     pagina = <DettaglioFilm key={p[1]} id={p[1]} utente={utente} />;
+  } else if (p[0] === 'festival-nuovo') {
+    pagina = <FormFestival utente={utente} />;
+  } else if (p[0] === 'festival' && p[1] && p[2] === 'modifica') {
+    pagina = <FormFestival key={p[1]} id={p[1]} utente={utente} />;
   } else if (p[0] === 'festival' && p[1]) {
-    pagina = <DettaglioFestival key={p[1]} id={p[1]} />;
+    pagina = <DettaglioFestival key={p[1]} id={p[1]} utente={utente} />;
   } else if (p[0] === 'festival') {
-    pagina = <ListaFestival />;
+    pagina = <ListaFestival utente={utente} />;
   } else if (p[0] === 'proiezioni') {
     pagina = <PaginaProiezioni />;
   } else {

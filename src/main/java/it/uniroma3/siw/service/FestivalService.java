@@ -79,7 +79,10 @@ public class FestivalService {
         festival.setDataInizio(dati.getDataInizio());
         festival.setDataFine(dati.getDataFine());
         festival.setDescrizione(dati.getDescrizione());
-        festival.setImmagine(dati.getImmagine());
+        // null = la richiesta non lo specifica (es. API REST): si tiene il simbolo attuale
+        if (dati.getImmagine() != null) {
+            festival.setImmagine(dati.getImmagine());
+        }
         return this.festivalRepository.save(festival);
     }
 

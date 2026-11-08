@@ -10,7 +10,7 @@
     <main>
     <p th:if="${messaggio}" th:text="${messaggio}">Messaggio</p>
     <div th:object="${festival}">
-        <img class="simbolo-grande" th:src="@{*{percorsoImmagine}}" alt="">
+        <img class="simbolo-grande" th:src="@{${festival.percorsoImmagine}}" alt="">
         <h1 th:text="*{nome}">Nome</h1>
         <p><span th:text="*{citta}">Città</span>, <span th:text="*{anno}">2025</span></p>
         <p>Dal <span th:text="*{dataInizio}">data</span> al <span th:text="*{dataFine}">data</span></p>

@@ -9,12 +9,6 @@
     <nav th:replace="~{fragments/navbar :: navbar}"></nav>
     <main>
     <h1>Proiezioni</h1>
-    <p class="conteggio"><strong th:text="${totaleProiezioni}">0</strong> proiezioni</p>
-    <p class="filtri">Ordina per:
-        <a th:href="@{/proiezioni(ordina='data')}">data e ora</a>
-        <a th:href="@{/proiezioni(ordina='sala')}">sala</a>
-        <a th:href="@{/proiezioni(ordina='film')}">film</a>
-    </p>
     <ul class="biglietti">
         <!-- Una riga per ogni proiezione. Film, sala e festival sono oggetti collegati: si scende con il punto (proiezione.film.titolo). -->
         <li th:each="proiezione : ${proiezioni}">

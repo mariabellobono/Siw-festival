@@ -318,6 +318,67 @@ function FormFilm({ id, utente }) {
   );
 }
 
+// ---------- FORM FESTIVAL (solo admin): inserimento e modifica ----------
+// E' lo stesso schema di FormFilm: se c'e' un id si modifica (PUT), altrimenti si inserisce (POST).
+function FormFestival({ id, utente }) {
+  const [dati, setDati] = useState({ nome: '', anno: '', citta: '', dataInizio: '', dataFine: '', descrizione: '' });
+  const [errore, setErrore] = useState(null);
+  const [campi, setCampi] = useState({});
+
+  useEffect(() => {
+    if (id) {
+      api.get('/api/festivals/' + id)
+        .then((f) => setDati({ nome: f.nome, anno: f.anno, citta: f.citta, dataInizio: f.dataInizio,
+          dataFine: f.dataFine, descrizione: f.descrizione || '' }))
+        .catch((e) => setErrore(e.message));
+    }
+  }, [id]);
+
+  if (!utente) return <p>Caricamento...</p>;
+  if (!utente.admin) {
+    return <div className="errore">Questa pagina e' riservata all'amministratore: accedi come admin.</div>;
+  }
+
+  function cambia(e) {
+    setDati({ ...dati, [e.target.name]: e.target.value });
+  }
+
+  function invia(e) {
+    e.preventDefault();
+    const corpo = {
+      ...dati,
+      anno: dati.anno === '' ? null : Number(dati.anno),
+      dataInizio: dati.dataInizio === '' ? null : dati.dataInizio,
+      dataFine: dati.dataFine === '' ? null : dati.dataFine,
+    };
+    const richiesta = id ? api.put('/api/festivals/' + id, corpo) : api.post('/api/festivals', corpo);
+    richiesta.then((f) => vaiA('/festival/' + f.id)).catch((err) => { setErrore(err.message); setCampi(err.campi); });
+  }
+
+  return (
+    <form className="card" onSubmit={invia}>
+      <h1>{id ? 'Modifica festival' : 'Nuovo festival'}</h1>
+      <Errore messaggio={errore} />
+      <div className="riga">
+        <Campo etichetta="Nome" nome="nome" dati={dati} cambia={cambia} campi={campi} />
+        <Campo etichetta="Anno" nome="anno" tipo="number" dati={dati} cambia={cambia} campi={campi} />
+        <Campo etichetta="Citta'" nome="citta" dati={dati} cambia={cambia} campi={campi} />
+      </div>
+      <div className="riga">
+        <Campo etichetta="Data di inizio" nome="dataInizio" tipo="date" dati={dati} cambia={cambia} campi={campi} />
+        <Campo etichetta="Data di fine" nome="dataFine" tipo="date" dati={dati} cambia={cambia} campi={campi} />
+      </div>
+      <div className="riga">
+        <Campo etichetta="Descrizione" nome="descrizione" dati={dati} cambia={cambia} campi={campi} />
+      </div>
+      <div className="riga">
+        <button type="submit">Salva</button>
+        <button type="button" className="secondario" onClick={() => vaiA(id ? '/festival/' + id : '/festival')}>Annulla</button>
+      </div>
+    </form>
+  );
+}
+
 // ---------- FESTIVAL ----------
 // stelle del voto (1-5): piene = voto, vuote = il resto
 function Stelle({ voto }) {
@@ -325,7 +386,7 @@ function Stelle({ voto }) {
   return <span className="stelle">{'\u2605'.repeat(v) + '\u2606'.repeat(5 - v)}</span>;
 }
 
-function ListaFestival() {
+function ListaFestival({ utente }) {
   const [festival, setFestival] = useState(null);
   const [errore, setErrore] = useState(null);
 
@@ -336,6 +397,9 @@ function ListaFestival() {
   return (
     <div>
       <h1>Festival</h1>
+      {utente && utente.admin && (
+        <p><button onClick={() => vaiA('/festival-nuovo')}>Nuovo festival</button></p>
+      )}
       <Errore messaggio={errore} />
       {!festival && !errore && <p>Caricamento...</p>}
       {festival && festival.map((f) => (
@@ -349,7 +413,7 @@ function ListaFestival() {
   );
 }
 
-function DettaglioFestival({ id }) {
+function DettaglioFestival({ id, utente }) {
   const [festival, setFestival] = useState(null);
   const [film, setFilm] = useState([]);
   const [proiezioni, setProiezioni] = useState([]);
@@ -360,6 +424,12 @@ function DettaglioFestival({ id }) {
     api.get('/api/festivals/' + id + '/movies').then(setFilm).catch(() => {});
     api.get('/api/festivals/' + id + '/screenings').then(setProiezioni).catch(() => {});
   }, [id]);
+
+  // eliminazione: il server risponde 409 se il festival ha ancora film o proiezioni (il messaggio compare nella pagina)
+  function eliminaFestival() {
+    if (!window.confirm('Eliminare questo festival? Si puo eliminare solo se non ha film ne proiezioni.')) return;
+    api.del('/api/festivals/' + id).then(() => vaiA('/festival')).catch((e) => setErrore(e.message));
+  }
 
   if (!festival) {
     return errore ? <Errore messaggio={errore} /> : <p>Caricamento...</p>;
@@ -372,6 +442,13 @@ function DettaglioFestival({ id }) {
         <h1>{festival.nome} <span className="piccolo">({festival.anno})</span></h1>
         <p>{festival.citta} &middot; dal {festival.dataInizio} al {festival.dataFine}</p>
         <p>{festival.descrizione}</p>
+        <Errore messaggio={errore} />
+        {utente && utente.admin && (
+          <div className="riga">
+            <button onClick={() => vaiA('/festival/' + id + '/modifica')}>Modifica festival</button>
+            <button className="pericolo" onClick={eliminaFestival}>Elimina festival</button>
+          </div>
+        )}
       </div>
       <h2>Film in concorso</h2>
       {film.length === 0 && <p>Nessun film.</p>}
